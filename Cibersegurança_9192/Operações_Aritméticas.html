@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operações Aritméticas</title>
+</head>
+<body onload="alert('Página para calcular as operações aritméticas básicas')">
+
+    <h1>Operações aritméticas</h1>
+
+    <form name="calcForm">
+        <table border="1">
+            <tr>
+                <td>Primeiro Número:</td>
+                <td><input type="text" name="num1"></td>
+            </tr>
+            <tr>
+                <td>Segundo Número:</td>
+                <td><input type="text" name="num2"></td>
+            </tr>
+            <tr>
+                <td>Resultado:</td>
+                <td><input type="text" name="res" readonly></td>
+            </tr>
+        </table>
+
+        <button type="button" onclick="somar()">Somar</button>
+        <button type="button" onclick="subtrair()">Subtrair</button>
+        <button type="button" onclick="multiplicar()">Multiplicar</button>
+        <button type="button" onclick="dividir()">Dividir</button>
+        <button type="button" onclick="limpar()">Limpar</button>
+    </form>
+
+    <script>
+        function somar() 
+        {
+            var n1 = parseInt(document.calcForm.num1.value);
+            var n2 = parseInt(document.calcForm.num2.value);
+            document.calcForm.res.value = n1 + n2;
+        }
+
+        function subtrair() 
+        {
+            var n1 = document.calcForm.num1.value;
+            var n2 = document.calcForm.num2.value;
+            document.calcForm.res.value = n1 - n2;
+        }
+
+        function multiplicar() 
+        {
+            var n1 = document.calcForm.num1.value;
+            var n2 = document.calcForm.num2.value;
+            document.calcForm.res.value = n1 * n2;
+        }
+
+        function dividir() 
+        {
+            var n1 = document.calcForm.num1.value;
+            var n2 = document.calcForm.num2.value;
+            if (n2 != 0) 
+            {
+                document.calcForm.res.value = n1 / n2;
+            } else 
+            {
+                alert("Não é possível dividir por zero!");
+            }
+        }
+
+        function limpar() 
+        {
+            document.calcForm.num1.value = "";
+            document.calcForm.num2.value = "";
+            document.calcForm.res.value = "";
+        }
+    </script>
+</body>
+</html>

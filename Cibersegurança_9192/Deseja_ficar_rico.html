@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deseja ficar rico</title>
+</head>
+<body onload="executarLogica()">
+
+    <p>Escolha a opção</p>
+
+    <button onclick="executarLogica()">Clique aqui</button>
+
+    <br><br>
+
+    <div id="mensagem"></div>
+
+    <script>
+        function executarLogica() 
+        {
+            var elemento = document.getElementById("mensagem");
+            elemento.innerHTML = "Verifica-se que você quer ficar rico, ou seja é ganancioso :(!";
+            var resposta = confirm("Deseja ficar rico!");
+            if (resposta == false) 
+            {
+                elemento.innerHTML = "Você está correto, sabe que não se fica rico assim do nada.";
+            }
+        }
+    </script>
+</body>
+</html>

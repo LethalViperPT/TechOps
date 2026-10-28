@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ética do Hacking e Lei do Cibercrime</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            padding: 4rem;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        .content-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .code-font { font-family: 'Fira Code', monospace; }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+            z-index: 50;
+        }
+
+        .nav-btn {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            color: white;
+        }
+
+        .highlight { color: #3b82f6; font-weight: 600; }
+        .danger { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <div id="progress" class="progress-bar"></div>
+
+    <!-- SLIDE 1: CAPA -->
+    <div class="slide active" id="slide-1">
+        <div class="text-center">
+            <i class="fa-solid fa-shield-halved text-8xl text-blue-500 mb-8"></i>
+            <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">A Ética do Hacking e a Lei do Cibercrime</h1>
+            <p class="text-2xl text-slate-400 mb-12 italic">UFCD 9187: Legislação, Segurança e Privacidade</p>
+            <p class="text-slate-500">Apresentado por: <span class="text-slate-300 font-semibold">[Teu Nome]</span></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: INTRODUÇÃO -->
+    <div class="slide" id="slide-2">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-blue-500 pl-6">1. Introdução</h2>
+            <div class="space-y-6 text-xl text-slate-300">
+                <p>A cibersegurança não se resume a competências técnicas; assenta num equilíbrio entre competência e <span class="highlight">responsabilidade</span>.</p>
+                <div class="grid grid-cols-2 gap-8 mt-8">
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-blue-500/20">
+                        <h3 class="text-blue-400 font-bold mb-2">Ética</h3>
+                        <p class="text-sm">Princípios morais que orientam o comportamento do profissional.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800/50 rounded-xl border border-red-500/20">
+                        <h3 class="text-red-400 font-bold mb-2">Legislação</h3>
+                        <p class="text-sm">O enquadramento legal que define os limites e as punições.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: O QUE É ETHICAL HACKING -->
+    <div class="slide" id="slide-3">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-green-500 pl-6">2. O que é o Ethical Hacking?</h2>
+            <div class="space-y-6 text-xl">
+                <p>Também conhecido como <span class="text-green-400 font-bold">White Hat</span>, é o uso de técnicas de hacking para fins defensivos.</p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-check text-green-500"></i> Encontrar vulnerabilidades antes dos criminosos.</li>
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-check text-green-500"></i> Fortalecer a infraestrutura das organizações.</li>
+                    <li class="flex items-center gap-4"><i class="fa-solid fa-check text-green-500"></i> Operar sempre com <span class="underline">consentimento</span>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: CÓDIGO DE ÉTICA -->
+    <div class="slide" id="slide-4">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-purple-500 pl-6">3. O Código de Ética</h2>
+            <div class="grid grid-cols-3 gap-6 text-center">
+                <div class="p-6 bg-slate-800 rounded-xl">
+                    <i class="fa-solid fa-file-signature text-3xl mb-4 text-purple-400"></i>
+                    <h4 class="font-bold mb-2">Autorização</h4>
+                    <p class="text-sm text-slate-400">Permissão explícita e escrita antes de qualquer teste.</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl">
+                    <i class="fa-solid fa-user-secret text-3xl mb-4 text-purple-400"></i>
+                    <h4 class="font-bold mb-2">Privacidade</h4>
+                    <p class="text-sm text-slate-400">Respeitar o sigilo de dados encontrados durante a auditoria.</p>
+                </div>
+                <div class="p-6 bg-slate-800 rounded-xl">
+                    <i class="fa-solid fa-flag text-3xl mb-4 text-purple-400"></i>
+                    <h4 class="font-bold mb-2">Transparência</h4>
+                    <p class="text-sm text-slate-400">Reportar todas as falhas, sem ocultar informação ao cliente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: LEI DO CIBERCRIME -->
+    <div class="slide" id="slide-5">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-red-500 pl-6">4. Lei do Cibercrime em Portugal</h2>
+            <p class="text-2xl mb-6 text-slate-400">Lei n.º 109/2009 de 15 de Setembro</p>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-4 bg-red-950/20 rounded border-l-4 border-red-500">
+                    <span>Acesso Ilegítimo</span>
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-red-950/20 rounded border-l-4 border-red-500">
+                    <span>Interceção Ilegítima de Dados</span>
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-red-950/20 rounded border-l-4 border-red-500">
+                    <span>Sabotagem Informática</span>
+                    <i class="fa-solid fa-gavel"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: ACESSO ILEGÍTIMO -->
+    <div class="slide" id="slide-6">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-orange-500 pl-6 text-orange-500">5. Acesso Ilegítimo (Artigo 6.º)</h2>
+            <div class="bg-orange-500/10 p-8 rounded-2xl border border-orange-500/30">
+                <p class="text-2xl leading-relaxed">
+                    "O simples acesso a um sistema, mesmo sem danos ou roubo, é <span class="underline">crime</span> se for feito sem autorização e com intenção de entrada."
+                </p>
+            </div>
+            <p class="mt-8 text-center text-slate-400 italic font-bold">A curiosidade não é uma defesa legal em tribunal.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: TIPOS DE HACKERS -->
+    <div class="slide" id="slide-7">
+        <div class="content-card text-center">
+            <h2 class="text-4xl font-bold mb-12">6. Tipos de Hackers</h2>
+            <div class="flex justify-around items-end gap-4 h-64">
+                <div class="w-1/3 p-4 bg-green-500/10 border-b-8 border-green-500 rounded-t-lg">
+                    <i class="fa-solid fa-hat-wizard text-5xl mb-4 text-green-500"></i>
+                    <h3 class="font-bold">White Hat</h3>
+                    <p class="text-xs">Ético / Legal</p>
+                </div>
+                <div class="w-1/3 p-4 bg-slate-500/10 border-b-8 border-slate-500 rounded-t-lg">
+                    <i class="fa-solid fa-hat-cowboy text-5xl mb-4 text-slate-500"></i>
+                    <h3 class="font-bold">Grey Hat</h3>
+                    <p class="text-xs">Ambíguo / Ilegal</p>
+                </div>
+                <div class="w-1/3 p-4 bg-red-500/10 border-b-8 border-red-900 rounded-t-lg">
+                    <i class="fa-solid fa-hat-wizard text-5xl mb-4 text-red-900"></i>
+                    <h3 class="font-bold">Black Hat</h3>
+                    <p class="text-xs">Criminoso</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: PENTESTING -->
+    <div class="slide" id="slide-8">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-yellow-500 pl-6">7. O Papel do Pentesting</h2>
+            <div class="flex gap-8 items-center">
+                <div class="flex-1 space-y-4">
+                    <p>O <strong>Teste de Penetração</strong> profissional exige:</p>
+                    <div class="p-4 bg-yellow-900/10 border-l-2 border-yellow-500">Contrato de Prestação de Serviços assinado.</div>
+                    <div class="p-4 bg-yellow-900/10 border-l-2 border-yellow-500">Definição do Âmbito (Scope) da invasão.</div>
+                    <div class="p-4 bg-yellow-900/10 border-l-2 border-yellow-500">Cláusulas de Responsabilidade Civil.</div>
+                </div>
+                <i class="fa-solid fa-file-contract text-9xl text-yellow-500/20"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: PRIVACIDADE -->
+    <div class="slide" id="slide-9">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-cyan-500 pl-6">8. Privacidade e Confidencialidade</h2>
+            <div class="space-y-6">
+                <div class="flex items-start gap-6 p-4 bg-cyan-900/10 rounded">
+                    <i class="fa-solid fa-user-shield text-cyan-400 text-3xl"></i>
+                    <div>
+                        <h4 class="font-bold text-cyan-400">Conformidade RGPD</h4>
+                        <p class="text-sm">Tratamento ético de dados pessoais de funcionários/clientes encontrados.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-6 p-4 bg-cyan-900/10 rounded">
+                    <i class="fa-solid fa-lock text-cyan-400 text-3xl"></i>
+                    <div>
+                        <h4 class="font-bold text-cyan-400">Sigilo Profissional</h4>
+                        <p class="text-sm">Manutenção de Acordos de Não Divulgação (NDA) vitalícios.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: CONSEQUÊNCIAS -->
+    <div class="slide" id="slide-10">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-red-600 pl-6 text-red-600">9. Consequências Jurídicas</h2>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <p class="text-red-400 font-bold">Pena de Prisão</p>
+                    <p class="text-sm italic">Pode chegar aos 10 anos em sabotagem qualificada.</p>
+                </div>
+                <div class="space-y-4">
+                    <p class="text-red-400 font-bold">Multas e Indemnizações</p>
+                    <p class="text-sm italic">Valores elevados para ressarcir danos materiais e reputacionais.</p>
+                </div>
+                <div class="col-span-2 p-4 bg-red-600/10 text-center rounded border border-red-600/30">
+                    O <strong>Registo Criminal</strong> impede qualquer futuro emprego na área da Cibersegurança.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: CONCLUSÃO -->
+    <div class="slide" id="slide-11">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-blue-500 pl-6">10. Conclusão</h2>
+            <div class="space-y-6 text-xl">
+                <p><i class="fa-solid fa-circle-check text-blue-500 mr-4"></i> A ética define a <span class="highlight">integridade</span> do profissional.</p>
+                <p><i class="fa-solid fa-circle-check text-blue-500 mr-4"></i> O conhecimento da lei é o que garante a <span class="highlight">segurança jurídica</span> do nosso trabalho.</p>
+                <p><i class="fa-solid fa-circle-check text-blue-500 mr-4"></i> O hacking é uma ferramenta de defesa, nunca de ataque malicioso.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: BIBLIOGRAFIA -->
+    <div class="slide" id="slide-12">
+        <div class="content-card">
+            <h2 class="text-4xl font-bold mb-8 border-l-4 border-slate-500 pl-6">Bibliografia</h2>
+            <div class="space-y-4 code-font text-sm text-slate-400">
+                <p>• Lei n.º 109/2009: Lei do Cibercrime em Portugal.</p>
+                <p>• EC-Council: Ethical Hacking Code of Ethics.</p>
+                <p>• CNCS: Referencial de Ética para a Cibersegurança.</p>
+                <p>• Comissão Nacional de Proteção de Dados (CNPD).</p>
+            </div>
+            <div class="mt-12 pt-8 border-t border-slate-700 text-center">
+                <h3 class="text-3xl font-bold text-blue-400">Obrigado!</h3>
+                <p class="text-slate-500 mt-2">Dúvidas?</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="fixed bottom-8 right-8 flex gap-4 z-50">
+        <button onclick="prevSlide()" class="nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <button onclick="nextSlide()" class="nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        function updateProgress() {
+            const bar = document.getElementById('progress');
+            bar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+        }
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.classList.remove('active'));
+            document.getElementById(`slide-${n}`).classList.add('active');
+            updateProgress();
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        updateProgress();
+    </script>
+</body>
+</html>

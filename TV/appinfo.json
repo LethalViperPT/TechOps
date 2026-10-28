@@ -1,0 +1,9 @@
+{
+    "id": "com.stremio.diana",
+    "version": "1.0.0",
+    "vendor": "Diana",
+    "type": "web",
+    "main": "index.html",
+    "title": "Stremio TV",
+    "icon": "icon.png"
+}
