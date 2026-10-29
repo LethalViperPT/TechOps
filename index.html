@@ -1,1140 +1,927 @@
 <!DOCTYPE html>
-<html lang="pt-PT" class="scroll-smooth">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechOps B2B | Automação, Desenvolvimento Java & Cibersegurança</title>
+    <title>TechOps Solutions | Soluções de TI, Automação & Cibersegurança</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Space Grotesk', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        darkBg: '#05070f',
-                        cardBg: '#0c1021',
-                        borderBg: '#1e293b',
-                        cyanGlow: '#00f0ff',
-                        purpleGlow: '#b721ff',
-                        greenGlow: '#10b981',
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-card: #121824;
+            --bg-card-hover: #1a2233;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-purple: #7f00ff;
+            --accent-pink: #e100ff;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 242, 254, 0.2);
+            --font-main: 'Inter', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: #05070f;
-            color: #f1f5f9;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #05070f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00f0ff;
-        }
-
-        /* Neon Glow Effects */
-        .glow-cyan {
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
-        }
-        .glow-purple {
-            box-shadow: 0 0 25px rgba(183, 33, 255, 0.25);
-        }
-        
-        .glow-border {
-            position: relative;
-            background: #0c1021;
-            border-radius: 1rem;
-            z-index: 1;
-        }
-        .glow-border::before {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            border-radius: 1.05rem;
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.4), rgba(183, 33, 255, 0.4));
+        /* Ambient Glow Background */
+        .glow-bg {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, rgba(127,0,255,0.05) 50%, transparent 70%);
+            top: -100px;
+            left: -100px;
             z-index: -1;
-            opacity: 0.3;
-            transition: opacity 0.3s ease, inset 0.3s ease;
-        }
-        .glow-border:hover::before {
-            opacity: 1;
-            inset: -2px;
+            pointer-events: none;
         }
 
-        /* Grid Background Pattern */
-        .bg-tech-grid {
-            background-size: 50px 50px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        .glow-bg-2 {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(127,0,255,0.08) 0%, rgba(0,242,254,0.03) 50%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* Cursor blinking */
-        .blinking-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1.2em;
-            background-color: #00f0ff;
-            vertical-align: middle;
-            margin-left: 3px;
-            animation: blink 0.8s infinite;
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        .logo {
+            font-family: var(--font-code);
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-cyan);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .btn-nav {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #000;
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 1rem;
+            position: relative;
+        }
+
+        .badge-hero {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .typing-container {
+            font-family: var(--font-code);
+            color: var(--accent-cyan);
+            border-right: 2px solid var(--accent-cyan);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.75s step-end infinite;
+        }
+
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-cyan); }
         }
 
-        /* Terminal Window styling */
-        .terminal-scroll {
-            font-family: 'JetBrains Mono', monospace;
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #050b14;
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        /* Services Grid */
+        .section {
+            padding: 6rem 8%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .card-list li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-list li i {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+        }
+
+        /* Interactive Demos Section */
+        .demos-container {
+            background: #0d131f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Terminal Demo Styling */
+        .terminal {
+            background: #050811;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: var(--font-code);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-body {
+            color: #00ff88;
+            min-height: 180px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.4rem;
+        }
+
+        .terminal-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .terminal-select {
+            background: #121824;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 0.6rem;
+            border-radius: 6px;
+            font-family: var(--font-code);
+            width: 100%;
+        }
+
+        /* Calculator Tool */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+        }
+
+        .calc-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .calc-input-group input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+        }
+
+        .calc-result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
+        }
+
+        .calc-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin: 0.5rem 0;
+        }
+
+        /* Contact Section */
+        .contact-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: #080d1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-main);
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            display: none;
+            background: rgba(39, 201, 63, 0.15);
+            border: 1px solid #27c93f;
+            color: #27c93f;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
     </style>
 </head>
-<body class="antialiased font-sans bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between">
+<body>
 
-    <!-- Toast Notifications Container -->
-    <div id="toast-container" class="fixed top-24 right-5 z-50 flex flex-col gap-3 max-w-sm"></div>
+    <div class="glow-bg"></div>
+    <div class="glow-bg-2"></div>
 
-    <!-- Header / Navigation -->
-    <header class="fixed top-0 left-0 w-full z-40 bg-darkBg/80 backdrop-blur-md border-b border-white/5 transition-all" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyanGlow to-purpleGlow p-0.5 group-hover:rotate-6 transition-transform">
-                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center">
-                        <i class="ph-bold ph-terminal-window text-cyanGlow text-xl"></i>
-                    </div>
-                </div>
-                <div>
-                    <span class="font-heading text-xl font-bold tracking-tight text-white">Tech<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow to-purpleGlow">Ops</span></span>
-                    <span class="block text-[10px] uppercase font-mono tracking-widest text-slate-400">Consultoria B2B</span>
-                </div>
-            </a>
-
-            <!-- Desktop Links -->
-            <nav class="hidden md:flex items-center gap-8">
-                <a href="#servicos" class="text-sm font-medium text-slate-300 hover:text-cyanGlow transition-colors">Serviços</a>
-                <a href="#demos" class="text-sm font-medium text-slate-300 hover:text-cyanGlow transition-colors flex items-center gap-1.5">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyanGlow opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyanGlow"></span>
-                    </span>
-                    Demos Interativas
-                </a>
-                <a href="#calculadora" class="text-sm font-medium text-slate-300 hover:text-cyanGlow transition-colors">Calculadora ROI</a>
-                <a href="#diferencial" class="text-sm font-medium text-slate-300 hover:text-cyanGlow transition-colors">Diferencial</a>
-                <a href="#contacto" class="text-sm font-medium text-slate-300 hover:text-cyanGlow transition-colors">Contacto</a>
-            </nav>
-
-            <!-- Action Buttons -->
-            <div class="flex items-center gap-3">
-                <button onclick="toggleAdminPanel()" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-xs font-mono text-cyanGlow flex items-center gap-2 transition-all">
-                    <i class="ph-bold ph-tray"></i>
-                    <span class="hidden sm:inline">Painel Leads</span>
-                    <span id="leads-count-badge" class="px-1.5 py-0.5 rounded-full bg-cyanGlow/20 text-cyanGlow text-[10px] font-bold">0</span>
-                </button>
-                <a href="#contacto" class="hidden sm:inline-flex px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-900 font-semibold text-sm shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] transition-all transform hover:-translate-y-0.5">
-                    Pedir Orçamento
-                </a>
-                <!-- Mobile Menu Button -->
-                <button id="mobile-toggle" class="md:hidden text-slate-300 hover:text-white text-2xl p-1">
-                    <i class="ph ph-list"></i>
-                </button>
-            </div>
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-terminal" style="color: var(--accent-cyan);"></i>
+            Tech<span>Ops</span>
         </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-800 bg-cardBg/95 backdrop-blur-xl px-4 py-4 flex flex-col gap-3">
-            <a href="#servicos" class="text-slate-300 hover:text-cyanGlow py-1">Serviços</a>
-            <a href="#demos" class="text-slate-300 hover:text-cyanGlow py-1">Demos Interativas</a>
-            <a href="#calculadora" class="text-slate-300 hover:text-cyanGlow py-1">Calculadora ROI</a>
-            <a href="#diferencial" class="text-slate-300 hover:text-cyanGlow py-1">Diferencial Operacional</a>
-            <a href="#contacto" class="text-slate-300 hover:text-cyanGlow py-1">Contacto Directo</a>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#demos">Demos Interativas</a></li>
+                <li><a href="#calculadora">Calculadora ROI</a></li>
+                <li><a href="#contacto" class="btn-nav">Contacto B2B</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow pt-20">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="badge-hero">
+            <i class="fa-solid fa-shield-halved"></i> Tecnologia &amp; Segurança B2B em Portugal
+        </div>
+        <h1>
+            Aumente a Eficiência e Proteja os Dados da sua Empresa com <br>
+            <span class="gradient-text">Soluções de TI à Medida</span>
+        </h1>
+        <p>
+            Automatização de processos repetitivos em Python, portais web robustos em Java/SQL e auditorias rigorosas de cibersegurança para PMEs.
+        </p>
+        <div style="margin-bottom: 2rem; font-size: 1.1rem; height: 30px;">
+            <span class="typing-container" id="typing-text"></span>
+        </div>
+        <div class="hero-cta">
+            <a href="#contacto" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Pedir Diagnóstico Gratuito</a>
+            <a href="#demos" class="btn-secondary"><i class="fa-solid fa-flask"></i> Experimentar Demos Online</a>
+        </div>
+    </section>
 
-        <!-- Hero Section -->
-        <section class="relative min-h-[90vh] flex items-center justify-center bg-tech-grid overflow-hidden py-16">
-            <!-- Glow Accents -->
-            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyanGlow/10 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purpleGlow/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <!-- Services Section -->
+    <section class="section" id="servicos">
+        <div class="section-header">
+            <h2>O Nosso Catálogo de Soluções</h2>
+            <p>Transformamos tarefas manuais e sistemas vulneráveis em operações rápidas, seguras e automatizadas.</p>
+        </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <!-- Status Badge -->
-                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyanGlow/30 text-xs font-mono text-cyanGlow mb-8 shadow-[0_0_15px_rgba(0,240,255,0.15)]">
-                    <i class="ph-fill ph-circle text-emerald-400 text-[10px] animate-pulse"></i>
-                    <span>Soluções de Engenharia de Software B2B & Automação</span>
+        <div class="grid-3">
+            <!-- Service 1 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Automação de Processos (Python)</h3>
+                <p>Elimine horas gastas em tarefas manuais no Excel, extração de dados e relatórios diários.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Processamento automático de PDFs e Faturas</li>
+                    <li><i class="fa-solid fa-check"></i> Consolidação de tabelas Excel complexas</li>
+                    <li><i class="fa-solid fa-check"></i> Scripts para envio de alertas por Email/SMS</li>
+                    <li><i class="fa-solid fa-check"></i> Integrações entre sistemas sem API oficial</li>
+                </ul>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-network-wired"></i></div>
+                <h3>Sistemas e Portais Web (Java/SQL)</h3>
+                <p>Desenvolvimento de plataformas internas para gestão de inventário, frotas e clientes.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Arquitetura escalável em Spring Boot</li>
+                    <li><i class="fa-solid fa-check"></i> Modelação e otimização de Bases de Dados SQL</li>
+                    <li><i class="fa-solid fa-check"></i> Painéis de controlo (Dashboards) intuitivos</li>
+                    <li><i class="fa-solid fa-check"></i> Portais B2B para clientes e fornecedores</li>
+                </ul>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>Auditoria &amp; Cibersegurança</h3>
+                <p>Proteja a sua empresa contra perda de dados, ataques de ransomware e vulnerabilidades web.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Análise de vulnerabilidades Web (Normas OWASP)</li>
+                    <li><i class="fa-solid fa-check"></i> Configuração de Redes Seguras e Firewalls</li>
+                    <li><i class="fa-solid fa-check"></i> Implementação de Políticas de Backup Automático</li>
+                    <li><i class="fa-solid fa-check"></i> Relatório Executivo com recomendações</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demos Section -->
+    <section class="section" id="demos" style="background: rgba(0,0,0,0.2);">
+        <div class="section-header">
+            <h2>Demonstrações Interativas em Tempo Real</h2>
+            <p>Teste no próprio navegador o funcionamento prático dos nossos scripts e ferramentas de análise.</p>
+        </div>
+
+        <div class="demos-container">
+            <div class="demo-tabs">
+                <button class="tab-btn active" onclick="switchTab('tab-python')"><i class="fa-brands fa-python"></i> Terminal de Automação Python</button>
+                <button class="tab-btn" onclick="switchTab('tab-security')"><i class="fa-solid fa-bug"></i> Scanner de Cibersegurança</button>
+            </div>
+
+            <!-- Tab 1: Python Terminal -->
+            <div id="tab-python" class="tab-content active">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">Selecione um cenário empresarial para executar a simulação de automação em tempo real:</p>
+                
+                <div class="terminal-input-group" style="margin-bottom: 1rem;">
+                    <select id="python-scenario" class="terminal-select">
+                        <option value="excel">1. Processar 50 Ficheiros Excel de Vendas num Relatório Único</option>
+                        <option value="pdf">2. Extrair Dados de Faturas em PDF e Inserir na Base de Dados</option>
+                        <option value="backup">3. Executar Backup Encriptado e Verificar Integridade</option>
+                    </select>
+                    <button class="btn-primary" onclick="runPythonDemo()"><i class="fa-solid fa-play"></i> Executar Script</button>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-heading font-extrabold text-white tracking-tight leading-[1.15] mb-6">
-                    Automatize Processos. <br class="hidden sm:inline">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow via-teal-300 to-purpleGlow">
-                        Proteja a Sua Empresa.
-                    </span>
-                </h1>
-
-                <!-- Dynamic Typewriter Subtitle -->
-                <div class="h-12 sm:h-16 flex items-center justify-center mb-8">
-                    <p class="text-lg sm:text-2xl text-slate-300 font-mono">
-                        <span id="typewriter-prefix" class="text-slate-500">&gt; </span>
-                        <span id="typewriter-text" class="text-cyanGlow font-medium"></span>
-                        <span class="blinking-cursor"></span>
-                    </p>
-                </div>
-
-                <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-400 mb-10 leading-relaxed">
-                    Unimos <strong>12 anos de bagagem em operações e logística</strong> à alta tecnologia. Criamos bots de automação em Python, portais à medida em Java/SQL e auditorias de Cibersegurança para PMEs.
-                </p>
-
-                <!-- Hero CTA Buttons -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="#demos" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyanGlow to-blue-600 text-slate-950 font-bold text-base shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                        <i class="ph-bold ph-play-circle text-xl"></i>
-                        Testar Demos em Tempo Real
-                    </a>
-                    <a href="#contacto" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold text-base transition-all flex items-center justify-center gap-2">
-                        <i class="ph-bold ph-chat-teardrop-dots text-xl text-purpleGlow"></i>
-                        Agendar Diagnóstico Grátis
-                    </a>
-                </div>
-
-                <!-- Fast Metric Badges -->
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-slate-800/80 text-left">
-                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/50">
-                        <div class="text-2xl font-bold font-mono text-cyanGlow">100%</div>
-                        <div class="text-xs text-slate-400">Código Focado em ROI</div>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <span style="font-size: 0.8rem; color: #666; margin-left: 10px;">python3 automation_runner.py</span>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/50">
-                        <div class="text-2xl font-bold font-mono text-purpleGlow">&lt; 24h</div>
-                        <div class="text-xs text-slate-400">Resposta a Orçamentos</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/50">
-                        <div class="text-2xl font-bold font-mono text-emerald-400">Zero</div>
-                        <div class="text-xs text-slate-400">Falta de Transparência</div>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/50">
-                        <div class="text-2xl font-bold font-mono text-amber-400">OWASP</div>
-                        <div class="text-xs text-slate-400">Padrões de Cibersegurança</div>
+                    <div class="terminal-body" id="terminal-output">
+                        <div class="terminal-line">[SYSTEM] Terminal de automação pronto. Escolha um cenário e clique em "Executar Script".</div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Services Section -->
-        <section id="servicos" class="py-24 bg-darkBg relative z-10 border-t border-slate-900">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-xs font-mono font-bold tracking-widest text-cyanGlow uppercase mb-2">&gt; Soluções Especializadas</h2>
-                    <p class="text-3xl sm:text-4xl font-heading font-bold text-white">Engenharia de Software & Automação</p>
-                    <p class="text-slate-400 max-w-2xl mx-auto mt-3">Soluções diretas que reduzem custos operacionais, eliminam erros manuais e protegem a reputação da sua empresa.</p>
+            <!-- Tab 2: Security Scanner -->
+            <div id="tab-security" class="tab-content">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">Insira o endereço do site da sua empresa para efetuar um teste rápido de configuração de segurança:</p>
+                
+                <div class="terminal-input-group" style="margin-bottom: 1.5rem;">
+                    <input type="text" id="scan-domain" class="form-control" placeholder="exemplo-empresa.pt" value="empresa-exemplo.pt">
+                    <button class="btn-primary" onclick="runSecurityScan()"><i class="fa-solid fa-search"></i> Analisar Segurança</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Service 1: Automação Python -->
-                    <div class="glow-border p-8 flex flex-col justify-between group">
-                        <div>
-                            <div class="w-14 h-14 rounded-xl bg-cyanGlow/10 border border-cyanGlow/30 flex items-center justify-center text-cyanGlow text-3xl mb-6 group-hover:scale-110 transition-transform">
-                                <i class="ph-bold ph-robot"></i>
-                            </div>
-                            <h3 class="text-xl font-heading font-bold text-white mb-3">Automação de Processos (RPA)</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                Substitua tarefas repetitivas por robôs em Python. Automatizamos a leitura de faturas PDF, sincronização de dados Excel, extração web (scraping) e integração entre sistemas legados.
-                            </p>
-                            <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800 pt-4 mb-6">
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-cyanGlow"></i> Leitura & Tratamento de Ficheiros</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-cyanGlow"></i> Scripts de Notificação Diária</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-cyanGlow"></i> Integrações ERP / CRM / APIs</li>
-                            </ul>
-                        </div>
-                        <a href="#demos" class="text-xs font-mono text-cyanGlow hover:underline flex items-center gap-1">Ver Demo de Script &rarr;</a>
+                <div id="scan-results" style="display: none; background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 id="scan-target">Análise: empresa-exemplo.pt</h4>
+                        <span id="scan-score" style="background: rgba(39, 201, 63, 0.2); color: #27c93f; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold;">Score: 85/100</span>
                     </div>
-
-                    <!-- Service 2: Sistemas Java & Web -->
-                    <div class="glow-border p-8 flex flex-col justify-between group">
-                        <div>
-                            <div class="w-14 h-14 rounded-xl bg-purpleGlow/10 border border-purpleGlow/30 flex items-center justify-center text-purpleGlow text-3xl mb-6 group-hover:scale-110 transition-transform">
-                                <i class="ph-bold ph-cpu"></i>
-                            </div>
-                            <h3 class="text-xl font-heading font-bold text-white mb-3">Sistemas & Portais Web</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                Desenvolvimento de plataformas corporativas em Java (Spring Boot) e SQL. Sistemas de gestão de frotas, controlo de stocks, portais de clientes e dashboards de apoio à decisão.
-                            </p>
-                            <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800 pt-4 mb-6">
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-purpleGlow"></i> Arquitetura Escalável & SQL</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-purpleGlow"></i> Portais Internos Protegidos</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-purpleGlow"></i> Gestão de Inventário & Frota</li>
-                            </ul>
-                        </div>
-                        <a href="#contacto" class="text-xs font-mono text-purpleGlow hover:underline flex items-center gap-1">Pedir Arquitetura &rarr;</a>
-                    </div>
-
-                    <!-- Service 3: Cibersegurança -->
-                    <div class="glow-border p-8 flex flex-col justify-between group">
-                        <div>
-                            <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
-                                <i class="ph-bold ph-shield-check"></i>
-                            </div>
-                            <h3 class="text-xl font-heading font-bold text-white mb-3">Auditoria de Cibersegurança</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
-                                Proteja os dados da sua empresa contra intrusões e fugas de informação. Identificamos falhas em aplicações web (OWASP Top 10), configuramos backups seguros e redes encriptadas.
-                            </p>
-                            <ul class="space-y-2 text-xs font-mono text-slate-300 border-t border-slate-800 pt-4 mb-6">
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-emerald-400"></i> Penetration Testing Básico</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-emerald-400"></i> Proteção contra Ranso&shy;mware</li>
-                                <li class="flex items-center gap-2"><i class="ph-bold ph-check text-emerald-400"></i> Relatório de Vulnerabilidades</li>
-                            </ul>
-                        </div>
-                        <a href="#demos" class="text-xs font-mono text-emerald-400 hover:underline flex items-center gap-1">Testar Scanner Online &rarr;</a>
-                    </div>
+                    <div id="scan-checks"></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Interactive Demos Section -->
-        <section id="demos" class="py-24 bg-cardBg relative border-t border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <span class="px-3 py-1 rounded-full bg-cyanGlow/10 text-cyanGlow font-mono text-xs font-semibold border border-cyanGlow/20 uppercase">
-                        Laboratório Interativo
-                    </span>
-                    <h2 class="text-3xl sm:text-5xl font-heading font-bold text-white mt-4">Experimente o Código em Ação</h2>
-                    <p class="text-slate-400 max-w-xl mx-auto mt-3">Teste em tempo real o simulador de automação em Python e o analisador de segurança web.</p>
+    <!-- ROI Calculator Section -->
+    <section class="section" id="calculadora">
+        <div class="section-header">
+            <h2>Calculadora de Poupança com Automação</h2>
+            <p>Calcule quanto tempo e dinheiro a sua empresa pode poupar mensalmente ao automatizar tarefas manuais.</p>
+        </div>
+
+        <div class="calculator-grid">
+            <div class="calculator-inputs">
+                <div class="calc-input-group">
+                    <label>Número de colaboradores com tarefas manuais no Excel/Processos: <b id="val-colabs" style="color:var(--accent-cyan);">3</b></label>
+                    <input type="range" id="input-colabs" min="1" max="20" value="3" oninput="updateCalculator()">
                 </div>
-
-                <!-- Tabs Navigation for Demos -->
-                <div class="flex justify-center mb-10">
-                    <div class="bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 flex gap-2">
-                        <button id="tab-btn-python" onclick="switchDemo('python')" class="px-5 py-2.5 rounded-lg font-mono text-xs font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyanGlow to-blue-600 text-slate-950 shadow-md">
-                            <i class="ph-bold ph-terminal text-base"></i>
-                            <span>1. Runner Automação Python</span>
-                        </button>
-                        <button id="tab-btn-security" onclick="switchDemo('security')" class="px-5 py-2.5 rounded-lg font-mono text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2">
-                            <i class="ph-bold ph-shield-warning text-base"></i>
-                            <span>2. Scanner Cibersegurança</span>
-                        </button>
-                    </div>
+                <div class="calc-input-group">
+                    <label>Horas gastas por colaborador/semana em tarefas repetitivas: <b id="val-horas" style="color:var(--accent-cyan);">5h</b></label>
+                    <input type="range" id="input-horas" min="1" max="20" value="5" oninput="updateCalculator()">
                 </div>
-
-                <!-- DEMO 1: Python Automation Terminal -->
-                <div id="demo-python-container" class="max-w-4xl mx-auto rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl overflow-hidden">
-                    <!-- Terminal Topbar -->
-                    <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                            <span class="ml-3 font-mono text-xs text-slate-400">python3 _automation_engine.py</span>
-                        </div>
-                        <span class="text-xs font-mono text-cyanGlow">STATUS: READY</span>
-                    </div>
-
-                    <!-- Terminal Body -->
-                    <div class="p-6">
-                        <label class="block font-mono text-xs text-slate-400 mb-2">Selecione o cenário de automação para testar:</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-                            <button onclick="selectScript(1)" id="script-btn-1" class="p-3 rounded-lg border border-cyanGlow bg-cyanGlow/10 text-left font-mono text-xs text-white transition-all">
-                                <div class="font-bold text-cyanGlow mb-1">📄 Leitor de Faturas PDF</div>
-                                <div class="text-[11px] text-slate-400">Extrai NIF, Totais e envia p/ Excel</div>
-                            </button>
-                            <button onclick="selectScript(2)" id="script-btn-2" class="p-3 rounded-lg border border-slate-800 bg-slate-900/50 text-left font-mono text-xs text-slate-400 hover:border-slate-700 transition-all">
-                                <div class="font-bold text-slate-200 mb-1">🛒 Monitor de Preços Web</div>
-                                <div class="text-[11px] text-slate-400">Scrapes lojas concorrentes em tempo real</div>
-                            </button>
-                            <button onclick="selectScript(3)" id="script-btn-3" class="p-3 rounded-lg border border-slate-800 bg-slate-900/50 text-left font-mono text-xs text-slate-400 hover:border-slate-700 transition-all">
-                                <div class="font-bold text-slate-200 mb-1">🔄 Sincronizador de CRM/ERP</div>
-                                <div class="text-[11px] text-slate-400">Valida clientes e atualiza base SQL</div>
-                            </button>
-                        </div>
-
-                        <!-- Terminal Output Window -->
-                        <div class="bg-black/90 rounded-xl p-4 border border-slate-800/80 min-h-[220px] max-h-[280px] overflow-y-auto terminal-scroll text-xs text-emerald-400 space-y-1" id="terminal-console">
-                            <p class="text-slate-500">// Clique em "Executar Bot de Automação" para simular o processo Python.</p>
-                        </div>
-
-                        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <button onclick="runPythonScript()" id="run-script-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-cyanGlow text-slate-950 font-mono font-bold text-xs hover:bg-cyan-400 transition-all flex items-center justify-center gap-2">
-                                <i class="ph-bold ph-play"></i>
-                                <span>Executar Bot de Automação</span>
-                            </button>
-                            <div id="script-stats" class="hidden text-xs font-mono text-slate-300 flex items-center gap-4">
-                                <span>⏱ Tempo Poupado: <strong class="text-cyanGlow">4.5 Horas/Dia</strong></span>
-                                <span>📊 Registos: <strong class="text-emerald-400">142 Processados</strong></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DEMO 2: Cybersecurity Scanner Simulator -->
-                <div id="demo-security-container" class="hidden max-w-4xl mx-auto rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl overflow-hidden">
-                    <div class="bg-slate-900 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <i class="ph-bold ph-shield text-emerald-400"></i>
-                            <span class="font-mono text-xs text-slate-300">Vulnerability Audit Engine v2.4</span>
-                        </div>
-                        <span class="text-xs font-mono text-emerald-400">MODO SANBOX</span>
-                    </div>
-
-                    <div class="p-6">
-                        <label class="block font-mono text-xs text-slate-400 mb-2">Insira o domínio da sua empresa para auditar (Simulação):</label>
-                        <div class="flex gap-2 mb-6">
-                            <input type="text" id="target-url" value="empresa-exemplo.pt" class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-xs font-mono text-white focus:outline-none focus:border-emerald-400">
-                            <button onclick="runSecurityScan()" id="scan-btn" class="px-6 py-3 rounded-xl bg-emerald-500 text-slate-950 font-mono font-bold text-xs hover:bg-emerald-400 transition-all flex items-center gap-2">
-                                <i class="ph-bold ph-magnifying-glass"></i>
-                                <span>Iniciar Audit</span>
-                            </button>
-                        </div>
-
-                        <!-- Scan Output Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Left: Terminal Scan Steps -->
-                            <div class="bg-black/90 rounded-xl p-4 border border-slate-800 min-h-[220px] terminal-scroll text-xs text-slate-300 space-y-1.5" id="scan-console">
-                                <p class="text-slate-500">// O scanner irá simular verificações OWASP, SSL e portas expostas.</p>
-                            </div>
-
-                            <!-- Right: Security Scorecard -->
-                            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800 flex flex-col justify-between">
-                                <div>
-                                    <h4 class="font-mono text-xs text-slate-400 uppercase tracking-wider mb-2">Classificação de Risco</h4>
-                                    <div class="flex items-center gap-4 mb-4">
-                                        <div id="score-badge" class="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center font-mono text-2xl font-bold text-slate-500">
-                                            -
-                                        </div>
-                                        <div>
-                                            <div id="score-status" class="font-bold text-sm text-white">Aguardando Teste</div>
-                                            <div id="score-sub" class="text-xs text-slate-400">Execute o teste ao lado.</div>
-                                        </div>
-                                    </div>
-                                    <div id="vulnerability-list" class="space-y-2 text-xs font-mono"></div>
-                                </div>
-                                <div class="border-t border-slate-800 pt-3 text-[11px] text-slate-400">
-                                    💡 Nota: Auditorias reais incluem relatórios completos em PDF com soluções de remediação.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Interactive ROI / Budget Estimator -->
-        <section id="calculadora" class="py-24 bg-darkBg relative border-t border-slate-900">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <span class="text-xs font-mono font-bold tracking-widest text-purpleGlow uppercase">&gt; Estimador Transparente</span>
-                    <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mt-2">Calculadora de Investimento & Retorno</h2>
-                    <p class="text-slate-400 text-sm mt-2">Selecione os módulos necessários para ter uma estimativa imediata de valores e retorno de tempo.</p>
-                </div>
-
-                <div class="bg-cardBg border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <!-- Options List -->
-                    <div class="lg:col-span-7 space-y-4">
-                        <label class="block font-mono text-xs text-slate-400 uppercase tracking-wider mb-2">Módulos Desejados:</label>
-
-                        <div onclick="toggleCalcModule(this, 350, 4)" class="calc-module p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 cursor-pointer transition-all flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" class="w-4 h-4 accent-cyanGlow rounded">
-                                <div>
-                                    <div class="text-sm font-semibold text-white">Automação de Tarefas Repetitivas (Python)</div>
-                                    <div class="text-xs text-slate-400">Tratamento automático de faturas/relatórios</div>
-                                </div>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-cyanGlow">350 €</span>
-                        </div>
-
-                        <div onclick="toggleCalcModule(this, 650, 8)" class="calc-module p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 cursor-pointer transition-all flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" class="w-4 h-4 accent-cyanGlow rounded">
-                                <div>
-                                    <div class="text-sm font-semibold text-white">Website Institucional Protegido / Landing Page</div>
-                                    <div class="text-xs text-slate-400">Design moderno dark, responsivo com SSL</div>
-                                </div>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-cyanGlow">650 €</span>
-                        </div>
-
-                        <div onclick="toggleCalcModule(this, 1400, 20)" class="calc-module p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 cursor-pointer transition-all flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" class="w-4 h-4 accent-cyanGlow rounded">
-                                <div>
-                                    <div class="text-sm font-semibold text-white">Sistema Web de Gestão (Java & SQL)</div>
-                                    <div class="text-xs text-slate-400">Portal interno de clientes, stocks ou frotas</div>
-                                </div>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-cyanGlow">1.400 €</span>
-                        </div>
-
-                        <div onclick="toggleCalcModule(this, 450, 5)" class="calc-module p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 cursor-pointer transition-all flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <input type="checkbox" class="w-4 h-4 accent-cyanGlow rounded">
-                                <div>
-                                    <div class="text-sm font-semibold text-white">Auditoria Completa de Cibersegurança</div>
-                                    <div class="text-xs text-slate-400">Testes de invasão web e política de backups</div>
-                                </div>
-                            </div>
-                            <span class="font-mono text-xs font-bold text-cyanGlow">450 €</span>
-                        </div>
-                    </div>
-
-                    <!-- Estimation Summary Panel -->
-                    <div class="lg:col-span-5 bg-slate-900 rounded-xl p-6 border border-slate-800 flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-mono text-xs text-slate-400 uppercase tracking-wider mb-4">Resumo da Estimativa</h3>
-                            
-                            <div class="space-y-4 mb-6">
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-sm text-slate-300">Investimento Total Estimado:</span>
-                                    <span id="calc-total" class="font-mono text-2xl font-bold text-cyanGlow">0 €</span>
-                                </div>
-                                <div class="flex justify-between items-baseline border-t border-slate-800 pt-3">
-                                    <span class="text-xs text-slate-400">Tempo Estimado Poupado:</span>
-                                    <span id="calc-hours" class="font-mono text-sm font-bold text-emerald-400">0 h / semana</span>
-                                </div>
-                                <div class="flex justify-between items-baseline">
-                                    <span class="text-xs text-slate-400">Prazo Médio de Entrega:</span>
-                                    <span id="calc-deadline" class="font-mono text-xs text-slate-300">Selecione opções</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <button onclick="applyEstimateToForm()" class="w-full py-3 rounded-xl bg-gradient-to-r from-purpleGlow to-blue-600 text-white font-semibold text-xs hover:opacity-90 transition-all">
-                                Usar Esta Seleção no Formulário
-                            </button>
-                            <p class="text-[10px] text-slate-400 text-center mt-2">Valores indicativos em regime de Trabalhador Independente (Isenção IVA Art 53.º).</p>
-                        </div>
-                    </div>
+                <div class="calc-input-group">
+                    <label>Custo médio por hora de trabalho (€): <b id="val-custo" style="color:var(--accent-cyan);">12 €</b></label>
+                    <input type="range" id="input-custo" min="8" max="40" value="12" oninput="updateCalculator()">
                 </div>
             </div>
-        </section>
 
-        <!-- Operations & Experience Differential Section -->
-        <section id="diferencial" class="py-24 bg-cardBg relative border-t border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <span class="text-xs font-mono font-bold tracking-widest text-cyanGlow uppercase">&gt; O Grande Diferencial</span>
-                        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mt-2 mb-6">
-                            12 Anos em Operações Reais. <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow to-purpleGlow">Apenas Depois Chegou o Código.</span>
-                        </h2>
-                        <p class="text-slate-300 leading-relaxed mb-4">
-                            Muitos programadores sabem escrever código, mas não sabem como funciona o atendimento a clientes sob pressão, a gestão de stocks de uma frota ou os imprevistos da logística diária.
-                        </p>
-                        <p class="text-slate-400 leading-relaxed mb-6">
-                            Com mais de uma década de experiência no setor operacional (incluindo rent-a-car e serviços corporativos) combinada com qualificações avançadas em <strong>Cibersegurança, Java e Automação pelo IEFP</strong>, entrego software pensado para resolver dores operacionais de verdade.
-                        </p>
+            <div class="calc-result-card">
+                <h3>Poupança Estimada da Sua Empresa</h3>
+                <div class="calc-number" id="calc-result-euros">720 €</div>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">poupados todos os meses</p>
+                <p style="font-size: 0.95rem;">Equivalente a <b id="calc-result-horas" style="color:#fff;">60 horas</b> de trabalho libertadas para tarefas estratégicas do negócio.</p>
+            </div>
+        </div>
+    </section>
 
-                        <div class="space-y-3 font-mono text-xs text-slate-300">
-                            <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-slate-800">
-                                <i class="ph-bold ph-check-circle text-cyanGlow text-lg"></i>
-                                <span>Compreensão imediata dos problemas de logística e atendimento.</span>
-                            </div>
-                            <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-slate-800">
-                                <i class="ph-bold ph-check-circle text-purpleGlow text-lg"></i>
-                                <span>Comunicação transparente sem "jargão técnico" incompreensível.</span>
-                            </div>
-                            <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-900 border border-slate-800">
-                                <i class="ph-bold ph-check-circle text-emerald-400 text-lg"></i>
-                                <span>Foco rigoroso em segurança de dados e confidencialidade B2B.</span>
-                            </div>
-                        </div>
+    <!-- Contact Form Section -->
+    <section class="section" id="contacto">
+        <div class="section-header">
+            <h2>Agende um Diagnóstico Gratuito</h2>
+            <p>Envie-nos uma mensagem para analisar como podemos ajudar a digitalizar e proteger a sua empresa.</p>
+        </div>
+
+        <div class="contact-box">
+            <div id="alert-msg" class="alert-success">
+                <i class="fa-solid fa-circle-check"></i> A sua mensagem foi enviada com sucesso! Entraremos em contacto brevemente.
+            </div>
+
+            <!-- Web3Forms Integration -->
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Tua Chave de Acesso Web3Forms -->
+                <input type="hidden" name="access_key" value="d01b07ff-b954-4b38-8065-251f4b6c95d7">
+                <input type="hidden" name="subject" value="Novo Contacto B2B - Site TechOps">
+                <input type="checkbox" name="botcheck" id="" style="display: none;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>Seu Nome *</label>
+                        <input type="text" name="name" class="form-control" placeholder="Ex: João Silva" required>
                     </div>
-
-                    <!-- Visual Card Showcase -->
-                    <div class="relative">
-                        <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyanGlow to-purpleGlow opacity-30 blur-xl"></div>
-                        <div class="relative rounded-2xl bg-slate-950 border border-slate-800 p-6 sm:p-8">
-                            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                                <div class="font-mono text-xs text-slate-400">STACK_TECNOLOGICO.json</div>
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px]">VERIFICADO</span>
-                            </div>
-                            <div class="space-y-4 font-mono text-xs">
-                                <div>
-                                    <span class="text-purpleGlow">"linguagens"</span>: [<span class="text-emerald-300">"Python"</span>, <span class="text-emerald-300">"Java"</span>, <span class="text-emerald-300">"JavaScript (ES6+)"</span>, <span class="text-emerald-300">"SQL"</span>],
-                                </div>
-                                <div>
-                                    <span class="text-purpleGlow">"frameworks_e_ferramentas"</span>: [<span class="text-emerald-300">"Spring Boot"</span>, <span class="text-emerald-300">"Selenium"</span>, <span class="text-emerald-300">"Pandas"</span>, <span class="text-emerald-300">"PostgreSQL"</span>],
-                                </div>
-                                <div>
-                                    <span class="text-purpleGlow">"ciberseguranca"</span>: [<span class="text-emerald-300">"OWASP Top 10"</span>, <span class="text-emerald-300">"Auditoria de Redes"</span>, <span class="text-emerald-300">"Encriptação SSL/TLS"</span>],
-                                </div>
-                                <div>
-                                    <span class="text-purpleGlow">"experiencia_operacional"</span>: <span class="text-cyanGlow">12_anos</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>Nome da Empresa</label>
+                        <input type="text" name="company" class="form-control" placeholder="Ex: Logística Silva Lda">
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Contact Section & Form -->
-        <section id="contacto" class="py-24 bg-darkBg relative border-t border-slate-900">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="text-center mb-12">
-                    <span class="text-xs font-mono font-bold tracking-widest text-cyanGlow uppercase">&gt; Fale Connosco</span>
-                    <h2 class="text-3xl sm:text-4xl font-heading font-bold text-white mt-2">Vamos Otimizar o Seu Negócio?</h2>
-                    <p class="text-slate-400 mt-2">Envie uma mensagem direta. Resposta garantida em menos de 24 horas úteis.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>E-mail de Contacto *</label>
+                        <input type="email" name="email" class="form-control" placeholder="nome@empresa.pt" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="+351 910 000 000">
+                    </div>
                 </div>
 
-                <div class="bg-cardBg border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl relative">
-                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-mono text-slate-300 mb-2">Nome / Empresa *</label>
-                                <input type="text" id="form-name" required placeholder="Ex: Logística Norte, Lda" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyanGlow focus:ring-1 focus:ring-cyanGlow transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-mono text-slate-300 mb-2">Email Profissional *</label>
-                                <input type="email" id="form-email" required placeholder="contacto@empresa.pt" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyanGlow focus:ring-1 focus:ring-cyanGlow transition-all">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-mono text-slate-300 mb-2">Serviço Principal Pretendido</label>
-                                <select id="form-service" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyanGlow transition-all">
-                                    <option value="Automação Python">Automação de Processos (Python)</option>
-                                    <option value="Sistema Web Java">Sistema Web / Portal (Java/SQL)</option>
-                                    <option value="Auditoria Cibersegurança">Auditoria de Cibersegurança</option>
-                                    <option value="Website Profissional">Website / Landing Page</option>
-                                    <option value="Outro">Outro / Consultoria Geral</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-mono text-slate-300 mb-2">Orçamento Estimado</label>
-                                <input type="text" id="form-budget" placeholder="Ex: ~500 € ou Seleção Calculadora" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyanGlow transition-all">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-mono text-slate-300 mb-2">Descrição da Necessidade / Projeto *</label>
-                            <textarea id="form-message" required rows="4" placeholder="Descreva sucintamente a tarefa que gostaria de automatizar ou o sistema que precisa de desenvolver..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyanGlow focus:ring-1 focus:ring-cyanGlow transition-all"></textarea>
-                        </div>
-
-                        <button type="submit" id="form-submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyanGlow to-blue-600 text-slate-950 font-bold font-mono text-sm hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all flex items-center justify-center gap-2">
-                            <i class="ph-bold ph-paper-plane-right text-lg"></i>
-                            <span>Enviar Pedido de Orçamento</span>
-                        </button>
-                    </form>
+                <div class="form-group">
+                    <label>Serviço de Interesse Principal</label>
+                    <select name="service" class="form-control">
+                        <option value="Automação Python">Automação de Processos e Excel (Python)</option>
+                        <option value="Software Java/SQL">Desenvolvimento de Software / Portal Web (Java/SQL)</option>
+                        <option value="Auditoria Cibersegurança">Auditoria de Cibersegurança e Redes</option>
+                        <option value="Outro / Consultoria">Outro / Consultoria Geral de TI</option>
+                    </select>
                 </div>
-            </div>
-        </section>
 
-    </main>
+                <div class="form-group">
+                    <label>Descreva brevemente o problema ou necessidade da empresa *</label>
+                    <textarea name="message" class="form-control" placeholder="Ex: Perderemos muito tempo a organizar ficheiros de vendas no final de cada mês..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1.1rem;">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar Pedido de Proposta
+                </button>
+            </form>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-darkBg border-t border-slate-900 py-10 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <i class="ph-bold ph-terminal-window text-cyanGlow text-2xl"></i>
-                <span class="font-heading font-bold text-white tracking-tight">Tech<span class="text-cyanGlow">Ops</span> Solutions</span>
-            </div>
-            <p class="text-slate-500 text-xs text-center">
-                © 2026 TechOps B2B Solutions. Qualificação IEFP em Cibersegurança & Automação.
-            </p>
-            <div class="flex gap-4">
-                <button onclick="toggleAdminPanel()" class="text-xs font-mono text-slate-400 hover:text-cyanGlow transition-colors">
-                    [ Acesso Admin Leads ]
-                </button>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2026 TechOps Solutions — Serviços de TI, Automação &amp; Cibersegurança B2B. Portugal.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #555;">Desenvolvido com foco em desempenho, segurança e simplicidade.</p>
     </footer>
-
-    <!-- LIVE LEADS ADMIN PANEL (DRAWER / MODAL) -->
-    <div id="admin-panel" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex justify-end transition-opacity">
-        <div class="w-full max-w-2xl bg-cardBg border-l border-slate-800 h-full flex flex-col justify-between p-6 overflow-y-auto">
-            <div>
-                <!-- Admin Header -->
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                    <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-tray text-cyanGlow text-xl"></i>
-                        <h3 class="font-heading font-bold text-lg text-white">Painel de Leads Registados</h3>
-                    </div>
-                    <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-xl">
-                        <i class="ph-bold ph-x"></i>
-                    </button>
-                </div>
-
-                <!-- Admin Quick Stats -->
-                <div class="grid grid-cols-3 gap-3 mb-6">
-                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                        <div id="admin-stat-total" class="font-mono font-bold text-xl text-cyanGlow">0</div>
-                        <div class="text-[10px] text-slate-400">Total Leads</div>
-                    </div>
-                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                        <div id="admin-stat-pending" class="font-mono font-bold text-xl text-amber-400">0</div>
-                        <div class="text-[10px] text-slate-400">Pendentes</div>
-                    </div>
-                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                        <div id="admin-stat-value" class="font-mono font-bold text-xl text-emerald-400">0 €</div>
-                        <div class="text-[10px] text-slate-400">Valor Estimado</div>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-between mb-4">
-                    <h4 class="font-mono text-xs text-slate-400 uppercase">Mensagens Recebidas</h4>
-                    <button onclick="clearAllLeads()" class="text-[11px] font-mono text-red-400 hover:underline">Limpar Histórico</button>
-                </div>
-
-                <!-- Leads Feed -->
-                <div id="leads-list" class="space-y-3">
-                    <!-- Populated dynamically -->
-                </div>
-            </div>
-
-            <div class="border-t border-slate-800 pt-4 mt-6">
-                <p class="text-[11px] text-slate-500 font-mono">
-                    Este painel simula a receção de mensagens do seu formulário em tempo real (armazenadas na sessão local).
-                </p>
-            </div>
-        </div>
-    </div>
 
     <!-- JavaScript Logic -->
     <script>
-        // -------------------------------------------------------------
-        // 1. IN-MEMORY STORAGE & INITIAL MOCK DATA
-        // -------------------------------------------------------------
-        let leadsDatabase = [
-            {
-                id: 101,
-                name: "Transportes & Logística Matos",
-                email: "geral@tlmatos.pt",
-                service: "Automação Python",
-                budget: "350 €",
-                message: "Precisamos de automatizar a leitura de 50 faturas diárias em PDF para Excel.",
-                date: "Hoje, 14:20",
-                status: "Novo"
-            },
-            {
-                id: 102,
-                name: "Clínica Dentária Sorriso",
-                email: "contacto@sorriso.pt",
-                service: "Auditoria Cibersegurança",
-                budget: "450 €",
-                message: "Queremos verificar a segurança da nossa rede interna e formulário do site.",
-                date: "Ontem, 09:15",
-                status: "Pendente"
-            }
-        ];
-
-        // -------------------------------------------------------------
-        // 2. TYPEWRITER EFFECT
-        // -------------------------------------------------------------
-        const phrases = [
-            "Automação de Faturas & Excel em Python",
-            "Sistemas Web à Medida em Java & SQL",
-            "Auditorias de Cibersegurança para PMEs",
-            "Redução de Horas de Trabalho Manual"
+        // Typing Effect in Hero
+        const typingPhrases = [
+            "Automação de tarefas manuais em Python...",
+            "Sistemas Web em Java e SQL por medida...",
+            "Auditorias de Cibersegurança e Proteção de Dados...",
+            "Eficiência operacional para PMEs em Portugal."
         ];
         let phraseIdx = 0;
         let charIdx = 0;
         let isDeleting = false;
-        const typewriterElement = document.getElementById("typewriter-text");
+        const typingElement = document.getElementById('typing-text');
 
-        function handleTypewriter() {
-            const currentPhrase = phrases[phraseIdx];
-            
+        function typeLoop() {
+            const currentPhrase = typingPhrases[phraseIdx];
             if (isDeleting) {
-                typewriterElement.textContent = currentPhrase.substring(0, charIdx - 1);
+                typingElement.textContent = currentPhrase.substring(0, charIdx - 1);
                 charIdx--;
             } else {
-                typewriterElement.textContent = currentPhrase.substring(0, charIdx + 1);
+                typingElement.textContent = currentPhrase.substring(0, charIdx + 1);
                 charIdx++;
             }
 
-            let typeSpeed = isDeleting ? 40 : 80;
+            let typeSpeed = isDeleting ? 30 : 70;
 
             if (!isDeleting && charIdx === currentPhrase.length) {
-                typeSpeed = 2200; // Pause at end of sentence
+                typeSpeed = 2000;
                 isDeleting = true;
             } else if (isDeleting && charIdx === 0) {
                 isDeleting = false;
-                phraseIdx = (phraseIdx + 1) % phrases.length;
-                typeSpeed = 400;
+                phraseIdx = (phraseIdx + 1) % typingPhrases.length;
+                typeSpeed = 500;
             }
 
-            setTimeout(handleTypewriter, typeSpeed);
+            setTimeout(typeLoop, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeLoop);
+
+        // Demo Tabs Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
         }
 
-        // -------------------------------------------------------------
-        // 3. DEMO SWITCHING & SIMULATORS
-        // -------------------------------------------------------------
-        let activeScriptId = 1;
+        // Python Terminal Demo Simulation
+        function runPythonDemo() {
+            const scenario = document.getElementById('python-scenario').value;
+            const output = document.getElementById('terminal-output');
+            output.innerHTML = '';
 
-        function switchDemo(type) {
-            const pythonContainer = document.getElementById("demo-python-container");
-            const securityContainer = document.getElementById("demo-security-container");
-            const btnPython = document.getElementById("tab-btn-python");
-            const btnSecurity = document.getElementById("tab-btn-security");
-
-            if (type === 'python') {
-                pythonContainer.classList.remove("hidden");
-                securityContainer.classList.add("hidden");
-                btnPython.className = "px-5 py-2.5 rounded-lg font-mono text-xs font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-cyanGlow to-blue-600 text-slate-950 shadow-md";
-                btnSecurity.className = "px-5 py-2.5 rounded-lg font-mono text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2";
-            } else {
-                pythonContainer.classList.add("hidden");
-                securityContainer.classList.remove("hidden");
-                btnSecurity.className = "px-5 py-2.5 rounded-lg font-mono text-xs font-semibold transition-all flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 shadow-md";
-                btnPython.className = "px-5 py-2.5 rounded-lg font-mono text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2";
-            }
-        }
-
-        function selectScript(id) {
-            activeScriptId = id;
-            for (let i = 1; i <= 3; i++) {
-                const btn = document.getElementById(`script-btn-${i}`);
-                if (i === id) {
-                    btn.className = "p-3 rounded-lg border border-cyanGlow bg-cyanGlow/10 text-left font-mono text-xs text-white transition-all";
-                } else {
-                    btn.className = "p-3 rounded-lg border border-slate-800 bg-slate-900/50 text-left font-mono text-xs text-slate-400 hover:border-slate-700 transition-all";
-                }
-            }
-        }
-
-        function runPythonScript() {
-            const consoleEl = document.getElementById("terminal-console");
-            const runBtn = document.getElementById("run-script-btn");
-            const statsEl = document.getElementById("script-stats");
-
-            runBtn.disabled = true;
-            runBtn.innerHTML = '<i class="ph-bold ph-spinner-gap animate-spin"></i> Executar Bot...';
-            consoleEl.innerHTML = '';
-            statsEl.classList.add("hidden");
-
-            const scriptLogs = {
-                1: [
-                    "🚀 Iniciando Python Engine v3.11...",
-                    "📂 Acedendo à pasta '/invoices/2026_Q1/pdf'...",
-                    "🔍 A detetar ficheiros: 142 PDFs de faturas encontrados.",
-                    "⚡ Extraindo campos: NIF, Data, Valor Total, IVA...",
-                    "✔️ Linha 1..45 processadas sem erros.",
-                    "📊 Exportando dados estruturados para 'relatorio_faturacao.xlsx'...",
-                    "SUCCESS: Automação concluída em 1.4 segundos!"
+            const logs = {
+                excel: [
+                    "[INIT] A ler diretoria /dados/vendas_mensais/...",
+                    "[INFO] Encontrados 50 ficheiros .xlsx (Total: 42.100 linhas)",
+                    "[PROCESSING] A filtrar duplicados e a formatar datas...",
+                    "[SUCCESS] Unificação concluída em 1.42 segundos!",
+                    "[OUTPUT] Relatorio_Final_Consolidado.xlsx gerado com sucesso."
                 ],
-                2: [
-                    "🚀 A iniciar Web Scraper & Monitor de Preços...",
-                    "🌐 A estabelecer ligação a 4 sites concorrentes...",
-                    "🏷 A extrair catálogo de 850 produtos e preços...",
-                    "⚠️ ALERTA DE PREÇO: Concorrente 'B' reduziu Item #402 em 12%.",
-                    "💾 A gravar dados em base de dados PostgreSQL...",
-                    "SUCCESS: Comparativo atualizado e relatório enviado por email."
+                pdf: [
+                    "[INIT] A carregar modelo de extração OCR/PDF...",
+                    "[INFO] A ler 12 faturas recebidas na pasta /entradas/...",
+                    "[PARSING] Fatura #8492 - Fornecedor A: 1.250,00 € extraído.",
+                    "[DATABASE] A ligar à base de dados PostgreSQL...",
+                    "[SUCCESS] 12 Registos inseridos com validação de IVA efetuada."
                 ],
-                3: [
-                    "🚀 A iniciar sincronizador Java / Python REST API...",
-                    "🔗 Autenticado em ERP Primavera / SAP...",
-                    "🔄 A comparar 1.200 ficheiros de clientes com CRM Web...",
-                    "✨ 14 novos contactos inseridos; 32 moradas atualizadas.",
-                    "SUCCESS: Sincronização concluída com 0 discrepâncias!"
+                backup: [
+                    "[INIT] A iniciar rotina de backup de segurança encriptado...",
+                    "[ENCRYPT] A aplicar encriptação AES-256 à base de dados...",
+                    "[TRANSFER] A carregar ficheiro seguro para servidor remoto...",
+                    "[VERIFY] Checksum SHA-256 validado com sucesso.",
+                    "[SUCCESS] Backup de 4.2 GB concluído e notificação enviada por email."
                 ]
             };
 
-            const logs = scriptLogs[activeScriptId];
-            let step = 0;
-
-            const interval = setInterval(() => {
-                if (step < logs.length) {
-                    const line = document.createElement("p");
-                    line.className = step === logs.length - 1 ? "text-cyanGlow font-bold" : "text-emerald-400";
-                    line.textContent = logs[step];
-                    consoleEl.appendChild(line);
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
-                    step++;
-                } else {
-                    clearInterval(interval);
-                    runBtn.disabled = false;
-                    runBtn.innerHTML = '<i class="ph-bold ph-arrow-clockwise"></i> Reexecutar Script';
-                    statsEl.classList.remove("hidden");
-                    showToast("Script Python executado com sucesso!", "success");
-                }
-            }, 450);
-        }
-
-        function runSecurityScan() {
-            const domain = document.getElementById("target-url").value || "empresa-exemplo.pt";
-            const consoleEl = document.getElementById("scan-console");
-            const scanBtn = document.getElementById("scan-btn");
-            const badge = document.getElementById("score-badge");
-            const status = document.getElementById("score-status");
-            const sub = document.getElementById("score-sub");
-            const list = document.getElementById("vulnerability-list");
-
-            scanBtn.disabled = true;
-            scanBtn.innerHTML = '<i class="ph-bold ph-spinner-gap animate-spin"></i> A Analisar...';
-            consoleEl.innerHTML = `<p class="text-slate-400">Target: ${domain}...</p>`;
-            list.innerHTML = '';
-            badge.className = "w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center font-mono text-2xl font-bold text-slate-500 animate-pulse";
-            badge.textContent = "?";
-
-            const scanSteps = [
-                `🔍 A testar resolução DNS para ${domain}...`,
-                "🔒 A verificar Certificado SSL/TLS (HTTPS)... (Válido)",
-                "🛡 A verificar Cabeçalhos de Segurança (CSP, HSTS, X-Frame)...",
-                "⚠️ AVISO: Cabeçalho 'Content-Security-Policy' em falta.",
-                "🚨 ALERTA: Porta 22 (SSH) acessível publicamente sem limitação IP.",
-                "✔️ Verificação contra OWASP Top 10 (SQLi, XSS) concluída."
-            ];
-
-            let step = 0;
-            const interval = setInterval(() => {
-                if (step < scanSteps.length) {
-                    const p = document.createElement("p");
-                    p.textContent = scanSteps[step];
-                    if (scanSteps[step].includes("AVISO")) p.className = "text-yellow-400";
-                    else if (scanSteps[step].includes("ALERTA")) p.className = "text-red-400";
-                    else p.className = "text-slate-300";
-                    consoleEl.appendChild(p);
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
-                    step++;
-                } else {
-                    clearInterval(interval);
-                    scanBtn.disabled = false;
-                    scanBtn.innerHTML = '<i class="ph-bold ph-arrow-clockwise"></i> Novo Scan';
-
-                    // Update Scorecard
-                    badge.className = "w-16 h-16 rounded-2xl bg-yellow-500/20 border border-yellow-500 text-yellow-400 flex items-center justify-center font-mono text-2xl font-bold";
-                    badge.textContent = "B-";
-                    status.textContent = "Atenção Necessária";
-                    status.className = "font-bold text-sm text-yellow-400";
-                    sub.textContent = "Foram detetadas 2 vulnerabilidades corrigíveis.";
-
-                    list.innerHTML = `
-                        <div class="p-2 rounded bg-red-500/10 border border-red-500/30 text-red-300">
-                            • Porta SSH Exposta ao Público
-                        </div>
-                        <div class="p-2 rounded bg-yellow-500/10 border border-yellow-500/30 text-yellow-300">
-                            • Ausência de Cabeçalhos HTTP de Segurança
-                        </div>
-                    `;
-
-                    showToast("Auditoria de segurança concluída!", "warning");
-                }
-            }, 400);
-        }
-
-        // -------------------------------------------------------------
-        // 4. ROI CALCULATOR LOGIC
-        // -------------------------------------------------------------
-        let currentTotalBudget = 0;
-        let currentHoursSaved = 0;
-
-        function toggleCalcModule(cardEl, price, hours) {
-            const checkbox = cardEl.querySelector('input[type="checkbox"]');
-            checkbox.checked = !checkbox.checked;
-
-            if (checkbox.checked) {
-                cardEl.classList.add("border-cyanGlow", "bg-cyanGlow/5");
-                currentTotalBudget += price;
-                currentHoursSaved += hours;
-            } else {
-                cardEl.classList.remove("border-cyanGlow", "bg-cyanGlow/5");
-                currentTotalBudget -= price;
-                currentHoursSaved -= hours;
-            }
-
-            document.getElementById("calc-total").textContent = `${currentTotalBudget} €`;
-            document.getElementById("calc-hours").textContent = `${currentHoursSaved} h / semana`;
-
-            const deadlineEl = document.getElementById("calc-deadline");
-            if (currentTotalBudget === 0) deadlineEl.textContent = "Selecione opções";
-            else if (currentTotalBudget <= 500) deadlineEl.textContent = "3 a 5 Dias Úteis";
-            else if (currentTotalBudget <= 1000) deadlineEl.textContent = "1 a 2 Semanas";
-            else deadlineEl.textContent = "2 a 4 Semanas";
-        }
-
-        function applyEstimateToForm() {
-            if (currentTotalBudget === 0) {
-                showToast("Selecione pelo menos um módulo na calculadora.", "warning");
-                return;
-            }
-            document.getElementById("form-budget").value = `~${currentTotalBudget} € (Estimador ROI)`;
-            document.getElementById("contacto").scrollIntoView({ behavior: "smooth" });
-            showToast("Estimativa copiada para o formulário de contacto!", "info");
-        }
-
-        // -------------------------------------------------------------
-        // 5. CONTACT FORM & ADMIN LEADS MANAGEMENT
-        // -------------------------------------------------------------
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const name = document.getElementById("form-name").value;
-            const email = document.getElementById("form-email").value;
-            const service = document.getElementById("form-service").value;
-            const budget = document.getElementById("form-budget").value || "Sob Consulta";
-            const message = document.getElementById("form-message").value;
-
-            const submitBtn = document.getElementById("form-submit-btn");
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="ph-bold ph-spinner-gap animate-spin"></i> A Enviar...';
-
-            setTimeout(() => {
-                const newLead = {
-                    id: Date.now(),
-                    name: name,
-                    email: email,
-                    service: service,
-                    budget: budget,
-                    message: message,
-                    date: "Agora mesmo",
-                    status: "Novo"
-                };
-
-                leadsDatabase.unshift(newLead);
-                updateLeadsUI();
-
-                document.getElementById("contact-form").reset();
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="ph-bold ph-paper-plane-right text-lg"></i> <span>Enviar Pedido de Orçamento</span>';
-
-                showToast("Mensagem enviada com sucesso! Entraremos em contacto em breve.", "success");
-            }, 1000);
-        }
-
-        function updateLeadsUI() {
-            const leadsListEl = document.getElementById("leads-list");
-            const countBadge = document.getElementById("leads-count-badge");
-            const statTotal = document.getElementById("admin-stat-total");
-            const statPending = document.getElementById("admin-stat-pending");
-            const statValue = document.getElementById("admin-stat-value");
-
-            countBadge.textContent = leadsDatabase.length;
-            statTotal.textContent = leadsDatabase.length;
-            statPending.textContent = leadsDatabase.filter(l => l.status === "Novo").length;
-
-            // Calculate estimated pipeline sum
-            let totalVal = 0;
-            leadsDatabase.forEach(l => {
-                const num = parseInt(l.budget.replace(/[^0-9]/g, '')) || 0;
-                totalVal += num;
+            let delay = 0;
+            logs[scenario].forEach(line => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = 'terminal-line';
+                    div.style.color = line.includes('SUCCESS') ? '#00ff88' : (line.includes('INIT') ? '#00f2fe' : '#94a3b8');
+                    div.textContent = line;
+                    output.appendChild(div);
+                    output.scrollTop = output.scrollHeight;
+                }, delay);
+                delay += 500;
             });
-            statValue.textContent = `${totalVal} €`;
-
-            if (leadsDatabase.length === 0) {
-                leadsListEl.innerHTML = '<p class="text-xs text-slate-500 font-mono text-center py-6">Nenhuma lead registada de momento.</p>';
-                return;
-            }
-
-            leadsListEl.innerHTML = leadsDatabase.map(lead => `
-                <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-sm text-white">${escapeHtml(lead.name)}</span>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${lead.status === 'Novo' ? 'bg-cyanGlow/20 text-cyanGlow' : 'bg-slate-800 text-slate-400'}">
-                            ${lead.status}
-                        </span>
-                    </div>
-                    <div class="text-xs text-slate-400 font-mono">
-                        📧 ${escapeHtml(lead.email)} | 🏷 ${escapeHtml(lead.service)} | 💰 ${escapeHtml(lead.budget)}
-                    </div>
-                    <p class="text-xs text-slate-300 italic bg-black/40 p-2 border border-slate-800/60 rounded">
-                        "${escapeHtml(lead.message)}"
-                    </p>
-                    <div class="text-[10px] text-slate-500 font-mono flex justify-between items-center pt-1">
-                        <span>Recebido: ${lead.date}</span>
-                        <button onclick="deleteLead(${lead.id})" class="text-red-400 hover:underline">Eliminar</button>
-                    </div>
-                </div>
-            `).join('');
         }
 
-        function deleteLead(id) {
-            leadsDatabase = leadsDatabase.filter(l => l.id !== id);
-            updateLeadsUI();
-            showToast("Lead removida.", "info");
-        }
+        // Security Scan Simulation
+        function runSecurityScan() {
+            const domain = document.getElementById('scan-domain').value || 'empresa.pt';
+            const results = document.getElementById('scan-results');
+            const target = document.getElementById('scan-target');
+            const checks = document.getElementById('scan-checks');
 
-        function clearAllLeads() {
-            leadsDatabase = [];
-            updateLeadsUI();
-            showToast("Lista de leads limpa.", "info");
-        }
-
-        function toggleAdminPanel() {
-            const panel = document.getElementById("admin-panel");
-            panel.classList.toggle("hidden");
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
-
-        // -------------------------------------------------------------
-        // 6. CUSTOM TOAST NOTIFICATIONS (NO ALERT())
-        // -------------------------------------------------------------
-        function showToast(message, type = 'info') {
-            const container = document.getElementById("toast-container");
-            const toast = document.createElement("div");
-            
-            const borderColors = {
-                success: 'border-emerald-500 text-emerald-300',
-                warning: 'border-yellow-500 text-yellow-300',
-                info: 'border-cyanGlow text-cyanGlow'
-            };
-
-            toast.className = `p-4 rounded-xl bg-cardBg border ${borderColors[type]} shadow-2xl text-xs font-mono flex items-center gap-3 transform translate-x-10 opacity-0 transition-all duration-300`;
-            toast.innerHTML = `
-                <i class="ph-bold ${type === 'success' ? 'ph-check-circle' : 'ph-info'} text-lg"></i>
-                <span>${message}</span>
-            `;
-
-            container.appendChild(toast);
+            target.textContent = `Análise de Segurança: ${domain}`;
+            results.style.display = 'block';
+            checks.innerHTML = '<p style="color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> A testar portas, certificados SSL e cabeçalhos HTTP...</p>';
 
             setTimeout(() => {
-                toast.classList.remove("translate-x-10", "opacity-0");
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add("translate-x-10", "opacity-0");
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
+                checks.innerHTML = `
+                    <div style="margin-bottom:0.8rem; color:#00ff88;"><i class="fa-solid fa-check-circle"></i> Certificado SSL/TLS Ativo (Encriptação HTTPS Válida)</div>
+                    <div style="margin-bottom:0.8rem; color:#00ff88;"><i class="fa-solid fa-check-circle"></i> Proteção contra SQL Injection nos formulários</div>
+                    <div style="margin-bottom:0.8rem; color:#ffbd2e;"><i class="fa-solid fa-triangle-exclamation"></i> Alerta: Cabeçalho Content-Security-Policy ausente</div>
+                    <div style="margin-bottom:0.8rem; color:#ffbd2e;"><i class="fa-solid fa-triangle-exclamation"></i> Versão do servidor visível nos cabeçalhos de resposta</div>
+                    <div style="margin-top:1.5rem; padding:1rem; background:rgba(0,242,254,0.1); border-radius:6px;">
+                        <b>Recomendação TechOps:</b> A sua empresa apresenta boa base, mas pode reforçar os cabeçalhos de segurança para prevenir ataques XSS.
+                    </div>
+                `;
+            }, 1200);
         }
 
-        // Mobile Menu toggle
-        document.getElementById("mobile-toggle").addEventListener("click", () => {
-            document.getElementById("mobile-menu").classList.toggle("hidden");
-        });
+        // ROI Calculator Update
+        function updateCalculator() {
+            const colabs = parseInt(document.getElementById('input-colabs').value);
+            const horas = parseInt(document.getElementById('input-horas').value);
+            const custo = parseInt(document.getElementById('input-custo').value);
 
-        // Initialize on Window Load
-        window.addEventListener("load", () => {
-            handleTypewriter();
-            updateLeadsUI();
+            document.getElementById('val-colabs').textContent = colabs;
+            document.getElementById('val-horas').textContent = horas + 'h';
+            document.getElementById('val-custo').textContent = custo + ' €';
+
+            const horasTotaisMes = colabs * horas * 4;
+            const poupancaEuros = horasTotaisMes * custo;
+
+            document.getElementById('calc-result-euros').textContent = poupancaEuros.toLocaleString('pt-PT') + ' €';
+            document.getElementById('calc-result-horas').textContent = horasTotaisMes + ' horas';
+        }
+
+        // Form Submit Feedback
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function(e) {
+            // Permite o envio normal do Web3Forms e mostra o aviso ao utilizador
+            document.getElementById('alert-msg').style.display = 'block';
         });
     </script>
 </body>
