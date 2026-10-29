@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechOps Solutions | Automação & Cibersegurança B2B</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>TechOps Solutions | Soluções de TI, Automação & Cibersegurança</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --bg-dark: #0a0e17;
             --bg-card: #121824;
+            --bg-card-hover: #1a2233;
             --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
             --accent-purple: #7f00ff;
+            --accent-pink: #e100ff;
             --text-main: #f0f4f8;
             --text-muted: #94a3b8;
-            --border-color: rgba(0, 242, 254, 0.2);
+            --border-glow: rgba(0, 242, 254, 0.2);
             --font-main: 'Inter', sans-serif;
             --font-code: 'Fira Code', monospace;
         }
@@ -24,6 +28,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -34,19 +39,41 @@
             overflow-x: hidden;
         }
 
-        /* Navbar */
+        /* Ambient Glow Background */
+        .glow-bg {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, rgba(127,0,255,0.05) 50%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-bg-2 {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(127,0,255,0.08) 0%, rgba(0,242,254,0.03) 50%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header / Navbar */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 10%;
-            background: rgba(10, 14, 23, 0.9);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo {
@@ -54,22 +81,29 @@
             font-weight: 700;
             font-size: 1.4rem;
             color: #fff;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .logo span {
             color: var(--accent-cyan);
         }
 
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
         nav a {
             color: var(--text-muted);
             text-decoration: none;
-            margin-left: 2rem;
             font-size: 0.95rem;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: 0.3s;
         }
 
         nav a:hover {
@@ -77,254 +111,851 @@
         }
 
         .btn-nav {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: #fff;
-            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #000;
+            padding: 0.6rem 1.4rem;
             border-radius: 6px;
-            font-weight: 600;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+            color: #000;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 8rem 10% 4rem 10%;
-            background: radial-gradient(circle at center, rgba(0, 242, 254, 0.05) 0%, transparent 70%);
+            padding: 4rem 1rem;
+            position: relative;
+        }
+
+        .badge-hero {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
             margin-bottom: 1.5rem;
-            max-width: 800px;
-            line-height: 1.2;
+            max-width: 900px;
         }
 
-        .hero h1 span {
-            color: var(--accent-cyan);
-            font-family: var(--font-code);
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-muted);
-            max-width: 650px;
+            max-width: 700px;
             margin-bottom: 2.5rem;
         }
 
-        .cta-buttons {
+        .typing-container {
+            font-family: var(--font-code);
+            color: var(--accent-cyan);
+            border-right: 2px solid var(--accent-cyan);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-cyan); }
+        }
+
+        .hero-cta {
             display: flex;
             gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
-            background: var(--accent-cyan);
-            color: var(--bg-dark);
-            padding: 0.9rem 2rem;
-            border-radius: 6px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #050b14;
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
             font-weight: 700;
+            font-size: 1rem;
             text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 242, 254, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
         }
 
         .btn-secondary {
-            border: 1px solid var(--border-color);
+            background: transparent;
             color: var(--text-main);
-            padding: 0.9rem 2rem;
-            border-radius: 6px;
+            padding: 1rem 2.2rem;
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 1rem;
             text-decoration: none;
-            transition: background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.05);
         }
 
-        /* Services Section */
-        .services {
-            padding: 6rem 10%;
-            background: var(--bg-card);
+        /* Services Grid */
+        .section {
+            padding: 6rem 8%;
         }
 
-        .section-title {
+        .section-header {
             text-align: center;
             margin-bottom: 4rem;
         }
 
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--text-main);
-            font-family: var(--font-code);
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-        .section-title h2 span {
-            color: var(--accent-cyan);
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .services-grid {
+        .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
         .card {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 2.5rem;
-            border-radius: 10px;
-            transition: border-color 0.3s, transform 0.3s;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            opacity: 0;
+            transition: 0.4s;
         }
 
         .card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .card i {
-            font-size: 2rem;
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
             color: var(--accent-cyan);
             margin-bottom: 1.5rem;
         }
 
         .card h3 {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
         }
 
         .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-list {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .card-list li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-list li i {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+        }
+
+        /* Interactive Demos Section */
+        .demos-container {
+            background: #0d131f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Terminal Demo Styling */
+        .terminal {
+            background: #050811;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: var(--font-code);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .terminal-body {
+            color: #00ff88;
+            min-height: 180px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.4rem;
+        }
+
+        .terminal-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .terminal-select {
+            background: #121824;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 0.6rem;
+            border-radius: 6px;
+            font-family: var(--font-code);
+            width: 100%;
+        }
+
+        /* Calculator Tool */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+        }
+
+        .calc-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .calc-input-group input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+        }
+
+        .calc-result-card {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
+        }
+
+        .calc-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin: 0.5rem 0;
         }
 
         /* Contact Section */
-        .contact {
-            padding: 6rem 10%;
-            text-align: center;
-        }
-
         .contact-box {
-            max-width: 600px;
-            margin: 0 auto;
             background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
             padding: 3rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .contact-info {
+        .contact-direct-info {
             display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            margin-top: 2rem;
-            align-items: center;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-main);
-            font-size: 1.05rem;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
             font-family: var(--font-code);
+            font-size: 0.95rem;
+            flex-wrap: wrap;
         }
 
-        .contact-item a {
+        .contact-direct-info a {
             color: var(--accent-cyan);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .contact-direct-info a:hover {
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: #080d1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-main);
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            display: none;
+            background: rgba(39, 201, 63, 0.15);
+            border: 1px solid #27c93f;
+            color: #27c93f;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    <div class="glow-bg"></div>
+    <div class="glow-bg-2"></div>
+
+    <!-- Header Navigation -->
     <header>
         <a href="#" class="logo">
             <i class="fa-solid fa-terminal" style="color: var(--accent-cyan);"></i>
             Tech<span>Ops</span>
         </a>
         <nav>
-            <a href="#servicos">Serviços</a>
-            <a href="#contacto">Contactos</a>
-            <a href="mailto:diana.santos@techopssolutions.pt" class="btn-nav">Solicitar Proposta</a>
+            <ul>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#demos">Demos Interativas</a></li>
+                <li><a href="#calculadora">Calculadora ROI</a></li>
+                <li><a href="#contacto" class="btn-nav">Contacto B2B</a></li>
+            </ul>
         </nav>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>Automação de Processos & <span>Segurança B2B</span></h1>
-        <p>Eliminamos tarefas manuais e otimizamos o fluxo operacional de pequenas e médias empresas com soluções em Python, integração de dados e auditoria técnica.</p>
-        <div class="cta-buttons">
-            <a href="#contacto" class="btn-primary">Falar com Especialista</a>
-            <a href="#servicos" class="btn-secondary">Ver Soluções</a>
+        <div class="badge-hero">
+            <i class="fa-solid fa-shield-halved"></i> Tecnologia &amp; Segurança B2B em Portugal
+        </div>
+        <h1>
+            Aumente a Eficiência e Proteja os Dados da sua Empresa com <br>
+            <span class="gradient-text">Soluções de TI à Medida</span>
+        </h1>
+        <p>
+            Automatização de processos repetitivos em Python, portais web robustos em Java/SQL e auditorias rigorosas de cibersegurança para PMEs.
+        </p>
+        <div style="margin-bottom: 2rem; font-size: 1.1rem; height: 30px;">
+            <span class="typing-container" id="typing-text"></span>
+        </div>
+        <div class="hero-cta">
+            <a href="#contacto" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Pedir Diagnóstico Gratuito</a>
+            <a href="#demos" class="btn-secondary"><i class="fa-solid fa-flask"></i> Experimentar Demos Online</a>
         </div>
     </section>
 
-    <!-- Serviços -->
-    <section class="services" id="servicos">
-        <div class="section-title">
-            <h2><span>/</span> Especialidades Técnicas</h2>
+    <!-- Services Section -->
+    <section class="section" id="servicos">
+        <div class="section-header">
+            <h2>O Nosso Catálogo de Soluções</h2>
+            <p>Transformamos tarefas manuais e sistemas vulneráveis em operações rápidas, seguras e automatizadas.</p>
         </div>
-        <div class="services-grid">
+
+        <div class="grid-3">
+            <!-- Service 1 -->
             <div class="card">
-                <i class="fa-solid fa-gears"></i>
-                <h3>Automação de Processos</h3>
-                <p>Desenvolvimento de scripts Python personalizados para leitura de faturas, reconciliação de ficheiros Excel e unificação de dados sem erro humano.</p>
+                <div class="card-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Automação de Processos (Python)</h3>
+                <p>Elimine horas gastas em tarefas manuais no Excel, extração de dados e relatórios diários.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Processamento automático de PDFs e Faturas</li>
+                    <li><i class="fa-solid fa-check"></i> Consolidação de tabelas Excel complexas</li>
+                    <li><i class="fa-solid fa-check"></i> Scripts para envio de alertas por Email/SMS</li>
+                    <li><i class="fa-solid fa-check"></i> Integrações entre sistemas sem API oficial</li>
+                </ul>
             </div>
+
+            <!-- Service 2 -->
             <div class="card">
-                <i class="fa-solid fa-shield-halved"></i>
-                <h3>Análise & Segurança Web</h3>
-                <p>Verificação de vulnerabilidades em aplicações, auditoria de código e implementação de boas práticas OWASP para proteção da infraestrutura.</p>
+                <div class="card-icon"><i class="fa-solid fa-network-wired"></i></div>
+                <h3>Sistemas e Portais Web (Java/SQL)</h3>
+                <p>Desenvolvimento de plataformas internas para gestão de inventário, frotas e clientes.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Arquitetura escalável em Spring Boot</li>
+                    <li><i class="fa-solid fa-check"></i> Modelação e otimização de Bases de Dados SQL</li>
+                    <li><i class="fa-solid fa-check"></i> Painéis de controlo (Dashboards) intuitivos</li>
+                    <li><i class="fa-solid fa-check"></i> Portais B2B para clientes e fornecedores</li>
+                </ul>
             </div>
+
+            <!-- Service 3 -->
             <div class="card">
-                <i class="fa-solid fa-network-wired"></i>
-                <h3>Gestão & Integrações</h3>
-                <p>Configuração de redes privadas empresariais (VPN), monitorização de pipelines e integração de sistemas via API para eficiência operacional.</p>
+                <div class="card-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>Auditoria &amp; Cibersegurança</h3>
+                <p>Proteja a sua empresa contra perda de dados, ataques de ransomware e vulnerabilidades web.</p>
+                <ul class="card-list">
+                    <li><i class="fa-solid fa-check"></i> Análise de vulnerabilidades Web (Normas OWASP)</li>
+                    <li><i class="fa-solid fa-check"></i> Configuração de Redes Seguras e Firewalls</li>
+                    <li><i class="fa-solid fa-check"></i> Implementação de Políticas de Backup Automático</li>
+                    <li><i class="fa-solid fa-check"></i> Relatório Executivo com recomendações</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Contactos -->
-    <section class="contact" id="contacto">
+    <!-- Interactive Demos Section -->
+    <section class="section" id="demos" style="background: rgba(0,0,0,0.2);">
+        <div class="section-header">
+            <h2>Demonstrações Interativas em Tempo Real</h2>
+            <p>Teste no próprio navegador o funcionamento prático dos nossos scripts e ferramentas de análise.</p>
+        </div>
+
+        <div class="demos-container">
+            <div class="demo-tabs">
+                <button class="tab-btn active" onclick="switchTab('tab-python')"><i class="fa-brands fa-python"></i> Terminal de Automação Python</button>
+                <button class="tab-btn" onclick="switchTab('tab-security')"><i class="fa-solid fa-bug"></i> Scanner de Cibersegurança</button>
+            </div>
+
+            <!-- Tab 1: Python Terminal -->
+            <div id="tab-python" class="tab-content active">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">Selecione um cenário empresarial para executar a simulação de automação em tempo real:</p>
+                
+                <div class="terminal-input-group" style="margin-bottom: 1rem;">
+                    <select id="python-scenario" class="terminal-select">
+                        <option value="excel">1. Processar 50 Ficheiros Excel de Vendas num Relatório Único</option>
+                        <option value="pdf">2. Extrair Dados de Faturas em PDF e Inserir na Base de Dados</option>
+                        <option value="backup">3. Executar Backup Encriptado e Verificar Integridade</option>
+                    </select>
+                    <button class="btn-primary" onclick="runPythonDemo()"><i class="fa-solid fa-play"></i> Executar Script</button>
+                </div>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <span style="font-size: 0.8rem; color: #666; margin-left: 10px;">python3 automation_runner.py</span>
+                    </div>
+                    <div class="terminal-body" id="terminal-output">
+                        <div class="terminal-line">[SYSTEM] Terminal de automação pronto. Escolha um cenário e clique em "Executar Script".</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Security Scanner -->
+            <div id="tab-security" class="tab-content">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">Insira o endereço do site da sua empresa para efetuar um teste rápido de configuração de segurança:</p>
+                
+                <div class="terminal-input-group" style="margin-bottom: 1.5rem;">
+                    <input type="text" id="scan-domain" class="form-control" placeholder="exemplo-empresa.pt" value="techopssolutions.pt">
+                    <button class="btn-primary" onclick="runSecurityScan()"><i class="fa-solid fa-search"></i> Analisar Segurança</button>
+                </div>
+
+                <div id="scan-results" style="display: none; background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 id="scan-target">Análise: techopssolutions.pt</h4>
+                        <span id="scan-score" style="background: rgba(39, 201, 63, 0.2); color: #27c93f; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold;">Score: 85/100</span>
+                    </div>
+                    <div id="scan-checks"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section class="section" id="calculadora">
+        <div class="section-header">
+            <h2>Calculadora de Poupança com Automação</h2>
+            <p>Calcule quanto tempo e dinheiro a sua empresa pode poupar mensalmente ao automatizar tarefas manuais.</p>
+        </div>
+
+        <div class="calculator-grid">
+            <div class="calculator-inputs">
+                <div class="calc-input-group">
+                    <label>Número de colaboradores com tarefas manuais no Excel/Processos: <b id="val-colabs" style="color:var(--accent-cyan);">3</b></label>
+                    <input type="range" id="input-colabs" min="1" max="20" value="3" oninput="updateCalculator()">
+                </div>
+                <div class="calc-input-group">
+                    <label>Horas gastas por colaborador/semana em tarefas repetitivas: <b id="val-horas" style="color:var(--accent-cyan);">5h</b></label>
+                    <input type="range" id="input-horas" min="1" max="20" value="5" oninput="updateCalculator()">
+                </div>
+                <div class="calc-input-group">
+                    <label>Custo médio por hora de trabalho (€): <b id="val-custo" style="color:var(--accent-cyan);">12 €</b></label>
+                    <input type="range" id="input-custo" min="8" max="40" value="12" oninput="updateCalculator()">
+                </div>
+            </div>
+
+            <div class="calc-result-card">
+                <h3>Poupança Estimada da Sua Empresa</h3>
+                <div class="calc-number" id="calc-result-euros">720 €</div>
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">poupados todos os meses</p>
+                <p style="font-size: 0.95rem;">Equivalente a <b id="calc-result-horas" style="color:#fff;">60 horas</b> de trabalho libertadas para tarefas estratégicas do negócio.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section" id="contacto">
+        <div class="section-header">
+            <h2>Agende um Diagnóstico Gratuito</h2>
+            <p>Envie-nos uma mensagem para analisar como podemos ajudar a digitalizar e proteger a sua empresa.</p>
+        </div>
+
         <div class="contact-box">
-            <h2>Vamos Conversar?</h2>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Apresente a sua necessidade operacional e receba uma proposta adaptada ao seu negócio.</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fa-solid fa-envelope" style="color: var(--accent-cyan);"></i>
-                    <a href="mailto:diana.santos@techopssolutions.pt">diana.santos@techopssolutions.pt</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fa-solid fa-globe" style="color: var(--accent-cyan);"></i>
-                    <span>https://techopssolutions.pt</span>
-                </div>
+            <!-- Diretos de Contacto Profissional -->
+            <div class="contact-direct-info">
+                <a href="mailto:diana.santos@techopssolutions.pt">
+                    <i class="fa-solid fa-envelope"></i> diana.santos@techopssolutions.pt
+                </a>
+                <a href="https://techopssolutions.pt" target="_blank">
+                    <i class="fa-solid fa-globe"></i> techopssolutions.pt
+                </a>
             </div>
+
+            <div id="alert-msg" class="alert-success">
+                <i class="fa-solid fa-circle-check"></i> A sua mensagem foi enviada com sucesso! Entraremos em contacto brevemente.
+            </div>
+
+            <!-- Web3Forms Integration -->
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Chave de Acesso Web3Forms -->
+                <input type="hidden" name="access_key" value="d01b07ff-b954-4b38-8065-251f4b6c95d7">
+                <input type="hidden" name="subject" value="Novo Contacto B2B - Site TechOps">
+                <input type="checkbox" name="botcheck" id="" style="display: none;">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>Seu Nome *</label>
+                        <input type="text" name="name" class="form-control" placeholder="Ex: João Silva" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome da Empresa</label>
+                        <input type="text" name="company" class="form-control" placeholder="Ex: Logística Silva Lda">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label>E-mail de Contacto *</label>
+                        <input type="email" name="email" class="form-control" placeholder="nome@empresa.pt" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="+351 910 000 000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Serviço de Interesse Principal</label>
+                    <select name="service" class="form-control">
+                        <option value="Automação Python">Automação de Processos e Excel (Python)</option>
+                        <option value="Software Java/SQL">Desenvolvimento de Software / Portal Web (Java/SQL)</option>
+                        <option value="Auditoria Cibersegurança">Auditoria de Cibersegurança e Redes</option>
+                        <option value="Outro / Consultoria">Outro / Consultoria Geral de TI</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Descreva brevemente o problema ou necessidade da empresa *</label>
+                    <textarea name="message" class="form-control" placeholder="Ex: Perderemos muito tempo a organizar ficheiros de vendas no final de cada mês..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1.1rem;">
+                    <i class="fa-solid fa-paper-plane"></i> Enviar Pedido de Proposta
+                </button>
+            </form>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 TechOps Solutions — Diana Moreira dos Santos. Todos os direitos reservados.</p>
+        <p>&copy; 2026 TechOps Solutions — Serviços de TI, Automação &amp; Cibersegurança B2B. Portugal.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #555;">diana.santos@techopssolutions.pt | https://techopssolutions.pt</p>
     </footer>
 
+    <!-- JavaScript Logic -->
+    <script>
+        // Typing Effect in Hero
+        const typingPhrases = [
+            "Automação de tarefas manuais em Python...",
+            "Sistemas Web em Java e SQL por medida...",
+            "Auditorias de Cibersegurança e Proteção de Dados...",
+            "Eficiência operacional para PMEs em Portugal."
+        ];
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typing-text');
+
+        function typeLoop() {
+            const currentPhrase = typingPhrases[phraseIdx];
+            if (isDeleting) {
+                typingElement.textContent = currentPhrase.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                typingElement.textContent = currentPhrase.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 30 : 70;
+
+            if (!isDeleting && charIdx === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % typingPhrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeLoop, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeLoop);
+
+        // Demo Tabs Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Python Terminal Demo Simulation
+        function runPythonDemo() {
+            const scenario = document.getElementById('python-scenario').value;
+            const output = document.getElementById('terminal-output');
+            output.innerHTML = '';
+
+            const logs = {
+                excel: [
+                    "[INIT] A ler diretoria /dados/vendas_mensais/...",
+                    "[INFO] Encontrados 50 ficheiros .xlsx (Total: 42.100 linhas)",
+                    "[PROCESSING] A filtrar duplicados e a formatar datas...",
+                    "[SUCCESS] Unificação concluída em 1.42 segundos!",
+                    "[OUTPUT] Relatorio_Final_Consolidado.xlsx gerado com sucesso."
+                ],
+                pdf: [
+                    "[INIT] A carregar modelo de extração OCR/PDF...",
+                    "[INFO] A ler 12 faturas recebidas na pasta /entradas/...",
+                    "[PARSING] Fatura #8492 - Fornecedor A: 1.250,00 € extraído.",
+                    "[DATABASE] A ligar à base de dados PostgreSQL...",
+                    "[SUCCESS] 12 Registos inseridos com validação de IVA efetuada."
+                ],
+                backup: [
+                    "[INIT] A iniciar rotina de backup de segurança encriptado...",
+                    "[ENCRYPT] A aplicar encriptação AES-256 à base de dados...",
+                    "[TRANSFER] A carregar ficheiro seguro para servidor remoto...",
+                    "[VERIFY] Checksum SHA-256 validado com sucesso.",
+                    "[SUCCESS] Backup de 4.2 GB concluído e notificação enviada por email."
+                ]
+            };
+
+            let delay = 0;
+            logs[scenario].forEach(line => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = 'terminal-line';
+                    div.style.color = line.includes('SUCCESS') ? '#00ff88' : (line.includes('INIT') ? '#00f2fe' : '#94a3b8');
+                    div.textContent = line;
+                    output.appendChild(div);
+                    output.scrollTop = output.scrollHeight;
+                }, delay);
+                delay += 500;
+            });
+        }
+
+        // Security Scan Simulation
+        function runSecurityScan() {
+            const domain = document.getElementById('scan-domain').value || 'techopssolutions.pt';
+            const results = document.getElementById('scan-results');
+            const target = document.getElementById('scan-target');
+            const checks = document.getElementById('scan-checks');
+
+            target.textContent = `Análise de Segurança: ${domain}`;
+            results.style.display = 'block';
+            checks.innerHTML = '<p style="color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> A testar portas, certificados SSL e cabeçalhos HTTP...</p>';
+
+            setTimeout(() => {
+                checks.innerHTML = `
+                    <div style="margin-bottom:0.8rem; color:#00ff88;"><i class="fa-solid fa-check-circle"></i> Certificado SSL/TLS Ativo (Encriptação HTTPS Válida)</div>
+                    <div style="margin-bottom:0.8rem; color:#00ff88;"><i class="fa-solid fa-check-circle"></i> Proteção contra SQL Injection nos formulários</div>
+                    <div style="margin-bottom:0.8rem; color:#ffbd2e;"><i class="fa-solid fa-triangle-exclamation"></i> Alerta: Cabeçalho Content-Security-Policy ausente</div>
+                    <div style="margin-bottom:0.8rem; color:#ffbd2e;"><i class="fa-solid fa-triangle-exclamation"></i> Versão do servidor visível nos cabeçalhos de resposta</div>
+                    <div style="margin-top:1.5rem; padding:1rem; background:rgba(0,242,254,0.1); border-radius:6px;">
+                        <b>Recomendação TechOps:</b> A sua empresa apresenta boa base, mas pode reforçar os cabeçalhos de segurança para prevenir ataques XSS.
+                    </div>
+                `;
+            }, 1200);
+        }
+
+        // ROI Calculator Update
+        function updateCalculator() {
+            const colabs = parseInt(document.getElementById('input-colabs').value);
+            const horas = parseInt(document.getElementById('input-horas').value);
+            const custo = parseInt(document.getElementById('input-custo').value);
+
+            document.getElementById('val-colabs').textContent = colabs;
+            document.getElementById('val-horas').textContent = horas + 'h';
+            document.getElementById('val-custo').textContent = custo + ' €';
+
+            const horasTotaisMes = colabs * horas * 4;
+            const poupancaEuros = horasTotaisMes * custo;
+
+            document.getElementById('calc-result-euros').textContent = poupancaEuros.toLocaleString('pt-PT') + ' €';
+            document.getElementById('calc-result-horas').textContent = horasTotaisMes + ' horas';
+        }
+
+        // Form Submit Feedback
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function(e) {
+            document.getElementById('alert-msg').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
