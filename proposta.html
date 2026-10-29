@@ -44,6 +44,12 @@
             border-radius: 12px;
             padding: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            outline: none;
+        }
+
+        .proposal-container:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
         }
 
         /* Header */
@@ -224,17 +230,18 @@
                 padding: 0;
             }
             .proposal-container {
-                border: none;
-                box-shadow: none;
-                max-width: 100%;
-                padding: 2rem;
+                border: none !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                padding: 2rem !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="proposal-container">
+    <!-- Atributo contenteditable ativa a edição direta no navegador -->
+    <div class="proposal-container" contenteditable="true">
         <!-- Header -->
         <header>
             <div class="logo">
